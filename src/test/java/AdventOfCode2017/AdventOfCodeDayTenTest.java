@@ -1,5 +1,6 @@
-package AdcentOfCode2017;
+package AdventOfCode2017;
 
+import AdcentOfCode2017.AdventOfCodeDayTen;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;

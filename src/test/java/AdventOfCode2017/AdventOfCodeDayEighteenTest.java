@@ -1,5 +1,6 @@
-package AdcentOfCode2017;
+package AdventOfCode2017;
 
+import AdcentOfCode2017.AdventOfCodeDayEighteen;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
