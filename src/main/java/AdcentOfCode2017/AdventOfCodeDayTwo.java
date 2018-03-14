@@ -28,8 +28,8 @@ public class AdventOfCodeDayTwo {
         int runningScore = 0;
 
         for(int line = 0; line < lines.length; line++) {
-            String[] values = lines[line].split(" "); // for tests
-            //String[] values = lines[line].split("\t");
+            //String[] values = lines[line].split(" "); // for tests
+            String[] values = lines[line].split("\t");
             int[] allValues = Arrays.stream(values).mapToInt(Integer::parseInt).toArray();
 
             Arrays.sort(allValues);
@@ -58,16 +58,16 @@ public class AdventOfCodeDayTwo {
         return runningScore;
     }
 
-    //PartOne
+//    PartOne
 //    public static void main(String[] args) {
 //        AdventOfCodeDayTwo adventOfCodeDayTwo = new AdventOfCodeDayTwo();
-//        System.out.println(adventOfCodeDayTwo.getResultPartTwo(input));
+//        System.out.println(adventOfCodeDayTwo.getResultPartOne(input));
 //    }
 
-    //PartTwo
+//    //PartTwo
     public static void main(String[] args) {
         AdventOfCodeDayTwo adventOfCodeDayTwo = new AdventOfCodeDayTwo();
-        System.out.println(adventOfCodeDayTwo.getResultPartOne(input));
+        System.out.println(adventOfCodeDayTwo.getResultPartTwo(input));
     }
 
     private static final String input = "1208\t412\t743\t57\t1097\t53\t71\t1029\t719\t133\t258\t69\t1104\t373\t367\t365\n" +
