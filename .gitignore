@@ -1,0 +1,15 @@
+.gradle/
+.idea/*
+AoC.iml
+build.gradle
+build/
+gradle/
+gradlew
+gradlew.bat
+hs_err_pid15060.log
+hs_err_pid19003.log
+hs_err_pid25926.log
+hs_err_pid26073.log
+out/
+settings.gradle
+.idea/modules.xml
