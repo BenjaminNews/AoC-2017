@@ -41,6 +41,25 @@ public class AdventOfCodeDayTwoTest {
         assertEquals(6, result);
     }
 
+    @Test
+    public void totalChecksumReturnsEighteen() {
+        AdventOfCodeDayTwo adventOfCodeDayTwo = new AdventOfCodeDayTwo();
+
+        String input = "5 1 9 5\n" +
+                       "7 5 3\n" +
+                       "2 4 6 8";
+
+        String[] inputLines = input.split("\n");
+
+        int total = 0;
+
+        for(int line = 0; line < inputLines.length; line++) {
+            total += adventOfCodeDayTwo.getResultPartOne(inputLines[line]);
+        }
+
+        assertEquals(18, total);
+    }
+
     //part two tests
     @Test
     public void rowReturnsValueOfFourPartTwo() {
