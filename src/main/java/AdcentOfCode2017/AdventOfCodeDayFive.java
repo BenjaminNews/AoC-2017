@@ -8,15 +8,21 @@ public class AdventOfCodeDayFive {
 
     private static int steps = 0;
 
-    private void performMovePartOne() {
-        if(trampolineValues[index] == 0) {
-            trampolineValues[index]++;
-        } else {
-            int jumps = trampolineValues[index];
-            trampolineValues[index]++;
-            index += jumps;
+    public int performMovePartOne() {
+        getTrampolineValues(input);
+
+        while(index < trampolineValues.length) {
+            if(trampolineValues[index] == 0) {
+                trampolineValues[index]++;
+            } else {
+                int jumps = trampolineValues[index];
+                trampolineValues[index]++;
+                index += jumps;
+            }
+            steps++;
+
         }
-        steps++;
+        return steps;
     }
 
     private void performMovePartTwo() {
@@ -49,11 +55,10 @@ public class AdventOfCodeDayFive {
 
         while(index < trampolineValues.length) {
             adventOfCodeDayFive.performMovePartOne();
-            System.out.println("Steps: " + steps);
         }
     }
 
-    static String input = "1\n" +
+    private static String input = "1\n" +
             "1\n" +
             "0\n" +
             "-1\n" +

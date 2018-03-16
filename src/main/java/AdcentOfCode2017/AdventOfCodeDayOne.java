@@ -1,9 +1,5 @@
 package AdcentOfCode2017;
 
-import com.benk.mockito.StringSplitter;
-
-import java.util.List;
-
 
 public class AdventOfCodeDayOne {
 

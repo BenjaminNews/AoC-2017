@@ -1,7 +1,6 @@
 package AdventOfCode2017;
 
 import AdcentOfCode2017.AdventOfCodeDayOne;
-import com.benk.mockito.StringSplitter;
 import org.junit.Test;
 
 import java.util.Arrays;
