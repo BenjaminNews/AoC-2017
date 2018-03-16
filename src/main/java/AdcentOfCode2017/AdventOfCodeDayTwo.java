@@ -11,8 +11,9 @@ public class AdventOfCodeDayTwo {
         int runningScore = 0;
 
         for(int line = 0; line < lines.length; line++) {
-            //String[] values = lines[line].split(" "); // for tests
-            String[] values = lines[line].split("\t");
+            String[] values;
+            values = getInputLines(lines[line]);
+
             int[] allValues = Arrays.stream(values).mapToInt(Integer::parseInt).toArray();
 
             Arrays.sort(allValues);
@@ -28,46 +29,53 @@ public class AdventOfCodeDayTwo {
         int runningScore = 0;
 
         for(int line = 0; line < lines.length; line++) {
-            //String[] values = lines[line].split(" "); // for tests
-            String[] values = lines[line].split("\t");
+            String[] values;
+
+            values = getInputLines(lines[line]);
+
             int[] allValues = Arrays.stream(values).mapToInt(Integer::parseInt).toArray();
 
             Arrays.sort(allValues);
 
-            int dividedPrecisely = 0;
-
             for (int i = 0; i < allValues.length; i++) {
-                int masterValue = allValues[i];
-                for (int x = i + 1; x < values.length; x++) {
-                    int currentValue = allValues[x];
-                    if (masterValue % currentValue == 0) {
-                        dividedPrecisely = masterValue / currentValue;
-                        break;
-                    } else if (currentValue % masterValue == 0) {
-                        dividedPrecisely = currentValue / masterValue;
-                        break;
-                    }
-                }
-                if (dividedPrecisely != 0) {
-                    runningScore += dividedPrecisely;
-                    dividedPrecisely = 0;
-                    break;
-                }
+                runningScore = getEventNumbers(runningScore, values, allValues, i);
             }
         }
         return runningScore;
     }
 
-//    PartOne
-//    public static void main(String[] args) {
-//        AdventOfCodeDayTwo adventOfCodeDayTwo = new AdventOfCodeDayTwo();
-//        System.out.println(adventOfCodeDayTwo.getResultPartOne(input));
-//    }
+    private int getEventNumbers(int runningScore, String[] values, int[] allValues, int i) {
+        int dividedPrecisely;
+        int masterValue = allValues[i];
+        for (int x = i + 1; x < values.length; x++) {
+            int currentValue = allValues[x];
+            if (masterValue % currentValue == 0) {
+                dividedPrecisely = masterValue / currentValue;
+                runningScore += dividedPrecisely;
+                break;
+            } else if (currentValue % masterValue == 0) {
+                dividedPrecisely = currentValue / masterValue;
+                runningScore += dividedPrecisely;
+                break;
+            }
+        }
+        return runningScore;
+    }
 
-//    //PartTwo
+    private String[] getInputLines(String line) {
+        String[] values;
+        if(line.contains("\t")) {
+            values = line.split("\t");
+        } else {
+            values = line.split(" "); // for tests
+        }
+        return values;
+    }
+
     public static void main(String[] args) {
         AdventOfCodeDayTwo adventOfCodeDayTwo = new AdventOfCodeDayTwo();
-        System.out.println(adventOfCodeDayTwo.getResultPartTwo(input));
+        System.out.println("part one: " + adventOfCodeDayTwo.getResultPartOne(input));
+        System.out.println("part two: " + adventOfCodeDayTwo.getResultPartTwo(input));
     }
 
     private static final String input = "1208\t412\t743\t57\t1097\t53\t71\t1029\t719\t133\t258\t69\t1104\t373\t367\t365\n" +

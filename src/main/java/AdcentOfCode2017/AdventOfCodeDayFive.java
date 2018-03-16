@@ -2,13 +2,13 @@ package AdcentOfCode2017;
 
 public class AdventOfCodeDayFive {
 
-    private static int index = 0;
+    private int index = 0;
 
-    private static int[] trampolineValues;
+    private int[] trampolineValues;
 
-    private static int steps = 0;
+    private int steps = 0;
 
-    public int performMovePartOne() {
+    public int performMovePartOne(String input) {
         getTrampolineValues(input);
 
         while(index < trampolineValues.length) {
@@ -20,28 +20,32 @@ public class AdventOfCodeDayFive {
                 index += jumps;
             }
             steps++;
-
         }
         return steps;
     }
 
-    private void performMovePartTwo() {
-        if(trampolineValues[index] == 0) {
-            trampolineValues[index]++;
-        } else if (trampolineValues[index] >= 3) {
-            int jumps = trampolineValues[index];
-            trampolineValues[index]--;
-            index += jumps;
-        } else {
-            int jumps = trampolineValues[index];
-            trampolineValues[index]++;
-            index += jumps;
+    public int performMovePartTwo(String input) {
+        getTrampolineValues(input);
+
+        while(index < trampolineValues.length) {
+            if (trampolineValues[index] == 0) {
+                trampolineValues[index]++;
+            } else if (trampolineValues[index] >= 3) {
+                int jumps = trampolineValues[index];
+                trampolineValues[index]--;
+                index += jumps;
+            } else {
+                int jumps = trampolineValues[index];
+                trampolineValues[index]++;
+                index += jumps;
+            }
+            steps++;
         }
-        steps++;
+        return steps;
     }
 
-    private void getTrampolineValues(String s) {
-        String[] intValues = s.split("\n");
+    private void getTrampolineValues(String input) {
+        String[] intValues = input.split("\n");
         trampolineValues = new int[intValues.length];
         for(int i = 0; i < intValues.length; i++) {
             trampolineValues[i] = Integer.parseInt(String.valueOf(intValues[i]));
@@ -51,14 +55,18 @@ public class AdventOfCodeDayFive {
     public static void main(String[] args) {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
 
-        adventOfCodeDayFive.getTrampolineValues(input);
+        adventOfCodeDayFive.getTrampolineValues(inputValues);
+        System.out.println(adventOfCodeDayFive.performMovePartOne(inputValues));
 
-        while(index < trampolineValues.length) {
-            adventOfCodeDayFive.performMovePartOne();
-        }
+        adventOfCodeDayFive = new AdventOfCodeDayFive();
+
+        adventOfCodeDayFive.getTrampolineValues(inputValues);
+        System.out.println(adventOfCodeDayFive.performMovePartTwo(inputValues));
+
+
     }
 
-    private static String input = "1\n" +
+    private static String inputValues = "1\n" +
             "1\n" +
             "0\n" +
             "-1\n" +

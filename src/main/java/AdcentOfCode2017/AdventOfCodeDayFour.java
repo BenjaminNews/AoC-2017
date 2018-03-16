@@ -17,7 +17,6 @@ public class AdventOfCodeDayFour {
                 elements.add(s);
             }
         }
-
         return 0;
     }
 

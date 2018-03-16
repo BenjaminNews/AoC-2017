@@ -32,7 +32,7 @@ public class AdventOfCodeDayOne {
         AdventOfCodeDayOne adventOfCodeDayOne = new AdventOfCodeDayOne();
 
         System.out.println("result: " + adventOfCodeDayOne.partOne(input));
-        //System.out.println("result: " + adventOfCodeDayOne.partTwo(input));
+        System.out.println("result: " + adventOfCodeDayOne.partTwo(input));
 
     }
 
