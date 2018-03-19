@@ -28,26 +28,38 @@ public class AdventOfCodeDaySeven {
     }
 
     public String getBaseTower() {
+        ArrayList<String> collectionOfChildrenToRemove = new ArrayList<>();
         while(supportingTowers.size() > 1) {
-            String nameToRemove = "";
-            for (String s : supportingTowers.keySet()) {
-                ArrayList<String> childrenTowerNames = supportingTowers.get(s);
-                for(int i = 0; i < childrenTowerNames.size(); i++) {
-                    String childName = childrenTowerNames.get(i);
-                    if(supportingTowers.containsKey(childName)) {
-                        nameToRemove = childName;
-                        break;
-                    }
-                }
-                if(!nameToRemove.equals("")) {
-                   break;
-                }
-            }
-            if (!nameToRemove.equals("")) {
-                supportingTowers.remove(nameToRemove);
-            }
+            generateReductionCollection(collectionOfChildrenToRemove);
+            reduceCollection(collectionOfChildrenToRemove);
         }
         return supportingTowers.keySet().iterator().next();
+    }
+
+    private void reduceCollection(ArrayList<String> collectionOfChildrenToRemove) {
+        if(collectionOfChildrenToRemove.size() > 0) {
+            for(String child : collectionOfChildrenToRemove) {
+                if(supportingTowers.containsKey(child)) {
+                    supportingTowers.remove(child);
+                }
+            }
+            collectionOfChildrenToRemove.clear();
+        }
+    }
+
+    private void generateReductionCollection(ArrayList<String> collectionOfChildrenToRemove) {
+        for (String s : supportingTowers.keySet()) {
+            ArrayList<String> childrenTowerNames = supportingTowers.get(s);
+            for(int i = 0; i < childrenTowerNames.size(); i++) {
+                String childName = childrenTowerNames.get(i);
+                if(supportingTowers.containsKey(childName)) {
+                    for(String child: childrenTowerNames) {
+                        collectionOfChildrenToRemove.add(child);
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -55,7 +67,7 @@ public class AdventOfCodeDaySeven {
 
         adventOfCodeDaySeven.setUp(input);
 
-        System.out.println("Base tower " + adventOfCodeDaySeven.getBaseTower());
+        System.out.println("Base tower: " + adventOfCodeDaySeven.getBaseTower());
     }
 
     private static final String input = "nzyiue (57)\n" +
