@@ -77,7 +77,6 @@ public class AdventOfCodeDayFifthteen {
 
     public static void main(String[] args) {
 
-//        AdventOfCodeDayFifthteen adventOfCodeDayFifthteen = new AdventOfCodeDayFifthteen(783, 16807, 325, 48271,40000000);
         AdventOfCodeDayFifthteen adventOfCodeDayFifthteen = new AdventOfCodeDayFifthteen(783, 16807, 325, 48271, 5000000);
 
         adventOfCodeDayFifthteen.performSteps(adventOfCodeDayFifthteen.getSteps());

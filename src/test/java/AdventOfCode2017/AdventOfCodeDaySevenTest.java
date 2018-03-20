@@ -29,5 +29,4 @@ public class AdventOfCodeDaySevenTest {
         String result = adventOfCodeDaySeven.getBaseTower();
         assertEquals("tknk", result);
     }
-
 }
