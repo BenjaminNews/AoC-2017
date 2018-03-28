@@ -1,6 +1,5 @@
 package AdventOfCode2017;
 
-import AdcentOfCode2017.AdventOfCodeDaySix;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

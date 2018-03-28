@@ -1,6 +1,5 @@
 package AdventOfCode2017;
 
-import AdcentOfCode2017.AdventOfCodeDaySixteen;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
@@ -17,7 +16,8 @@ public class AdventOfCodeDaySixteenTest {
 
         adventOfCodeDaySixteen.spin(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
+
         assertEquals("eabcd", result);
     }
 
@@ -31,7 +31,8 @@ public class AdventOfCodeDaySixteenTest {
 
         adventOfCodeDaySixteen.spin(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
+
         assertEquals("deabc", result);
     }
 
@@ -45,7 +46,8 @@ public class AdventOfCodeDaySixteenTest {
 
         adventOfCodeDaySixteen.spin(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
+
         assertEquals("cdeab", result);
     }
 
@@ -59,7 +61,8 @@ public class AdventOfCodeDaySixteenTest {
 
         adventOfCodeDaySixteen.spin(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
+
         assertEquals("bcdea", result);
     }
 
@@ -73,7 +76,8 @@ public class AdventOfCodeDaySixteenTest {
 
         adventOfCodeDaySixteen.spin(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
+
         assertEquals("abcde", result);
     }
 
@@ -85,9 +89,9 @@ public class AdventOfCodeDaySixteenTest {
 
         String command = "x0/1";
 
-        adventOfCodeDaySixteen.swapLocations(command);
+        adventOfCodeDaySixteen.swap(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
         assertEquals("bacde", result);
     }
 
@@ -99,9 +103,9 @@ public class AdventOfCodeDaySixteenTest {
 
         String command = "x0/2";
 
-        adventOfCodeDaySixteen.swapLocations(command);
+        adventOfCodeDaySixteen.swap(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
         assertEquals("cbade", result);
     }
 
@@ -113,9 +117,9 @@ public class AdventOfCodeDaySixteenTest {
 
         String command = "x2/3";
 
-        adventOfCodeDaySixteen.swapLocations(command);
+        adventOfCodeDaySixteen.swap(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
         assertEquals("abdce", result);
     }
 
@@ -127,9 +131,9 @@ public class AdventOfCodeDaySixteenTest {
 
         String command = "x3/2";
 
-        adventOfCodeDaySixteen.swapLocations(command);
+        adventOfCodeDaySixteen.swap(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
         assertEquals("abdce", result);
     }
 
@@ -141,9 +145,9 @@ public class AdventOfCodeDaySixteenTest {
 
         String command = "x4/0";
 
-        adventOfCodeDaySixteen.swapLocations(command);
+        adventOfCodeDaySixteen.swap(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
         assertEquals("ebcda", result);
     }
 
@@ -157,7 +161,7 @@ public class AdventOfCodeDaySixteenTest {
 
         adventOfCodeDaySixteen.swapPrograms(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
         assertEquals("bacde", result);
     }
 
@@ -171,7 +175,7 @@ public class AdventOfCodeDaySixteenTest {
 
         adventOfCodeDaySixteen.swapPrograms(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
+        String result = adventOfCodeDaySixteen.getValues();
         assertEquals("abced", result);
     }
 
@@ -179,13 +183,45 @@ public class AdventOfCodeDaySixteenTest {
     public void swapProgramsCandDReturnsABCED() {
         AdventOfCodeDaySixteen adventOfCodeDaySixteen = new AdventOfCodeDaySixteen();
 
-        adventOfCodeDaySixteen.swapPrograms("abcde");
+        adventOfCodeDaySixteen.setUp("abcde");
 
         String command = "pc/d";
 
-        adventOfCodeDaySixteen.spin(command);
+        adventOfCodeDaySixteen.swapPrograms(command);
 
-        String result = adventOfCodeDaySixteen.getListAsString();
-        assertEquals("abced", result);
+        String result = adventOfCodeDaySixteen.getValues();
+        assertEquals("abdce", result);
+    }
+
+    @Test
+    public void allActionsReturnBAEDC(){
+        AdventOfCodeDaySixteen adventOfCodeDaySixteen = new AdventOfCodeDaySixteen();
+
+        adventOfCodeDaySixteen.setUp("abcde");
+
+        String command = "s1\n" +
+                         "x3/4\n" +
+                         "pe/b";
+
+        adventOfCodeDaySixteen.move(command.split("\n"),1);
+
+        String result = adventOfCodeDaySixteen.getValues();
+        assertEquals("baedc", result);
+    }
+
+    @Test
+    public void allActionsReturnCEADBafterTwoRotations(){
+        AdventOfCodeDaySixteen adventOfCodeDaySixteen = new AdventOfCodeDaySixteen();
+
+        adventOfCodeDaySixteen.setUp("abcde");
+
+        String command = "s1\n" +
+                "x3/4\n" +
+                "pe/b";
+
+        adventOfCodeDaySixteen.move(command.split("\n"),2);
+
+        String result = adventOfCodeDaySixteen.getValues();
+        assertEquals("ceadb", result);
     }
 }
