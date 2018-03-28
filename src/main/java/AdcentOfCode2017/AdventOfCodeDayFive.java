@@ -11,13 +11,10 @@ public class AdventOfCodeDayFive {
     public static void main(String[] args) {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
 
-        //adventOfCodeDayFive.getTrampolineValues("0 3 0 1 -3");
         adventOfCodeDayFive.getTrampolineValues(input);
-        //adventOfCodeDayFive.printTrampolineValues();
 
         while(index < trampolineValues.length) {
             adventOfCodeDayFive.performMove();
-        //    adventOfCodeDayFive.printTrampolineValues();
             System.out.println("Steps: " + steps);
         }
 
@@ -45,15 +42,6 @@ public class AdventOfCodeDayFive {
             trampolineValues[i] = Integer.parseInt(String.valueOf(intValues[i]));
         }
     }
-
-//    private void printTrampolineValues() {
-//        String printValue = "";
-//        for(int i = 0; i < trampolineValues.length; i++) {
-//            printValue += trampolineValues[i] + " ";
-//        }
-//        System.out.println(printValue);
-//        System.out.println("index: " + index);
-//    }
 
     static String input = "1\n" +
             "1\n" +
@@ -1111,24 +1099,3 @@ public class AdventOfCodeDayFive {
 
 
 }
-
-
-
-
-
-//    public int getNumberOfMoves(String display) {
-//
-//        moves = display.split("  ");
-//        for (String s : moves) {
-//            System.out.println(s);
-//        }
-//        return -1;
-//    }
-//
-//    private void performMove() {
-//        int currentValue = Integer.parseInt(moves[index]);
-//
-//        if(currentValue == 0) {
-//
-//        }
-//    }
