@@ -2,12 +2,13 @@ package AdcentOfCode2017;
 
 public class AdventOfCodeDayFive {
 
-    private static int index = 0;
+    private int index = 0;
 
-    private static int[] trampolineValues;
+    private int[] trampolineValues;
 
-    private static int steps = 0;
+    private int steps = 0;
 
+<<<<<<< HEAD
     public static void main(String[] args) {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
 
@@ -16,34 +17,71 @@ public class AdventOfCodeDayFive {
         while(index < trampolineValues.length) {
             adventOfCodeDayFive.performMove();
             System.out.println("Steps: " + steps);
-        }
+=======
+    public int performMovePartOne(String input) {
+        getTrampolineValues(input);
 
+        while(index < trampolineValues.length) {
+            if(trampolineValues[index] == 0) {
+                trampolineValues[index]++;
+            } else {
+                int jumps = trampolineValues[index];
+                trampolineValues[index]++;
+                index += jumps;
+            }
+            steps++;
+>>>>>>> b35c03bcd512210346378e088f2b2c8052ea955c
+        }
+        return steps;
     }
 
-    private void performMove() {
-        if(trampolineValues[index] == 0) {
-            trampolineValues[index]++;
-        } else if (trampolineValues[index] >= 3) {
-            int jumps = trampolineValues[index];
-            trampolineValues[index]--;
-            index += jumps;
-        } else {
-            int jumps = trampolineValues[index];
-            trampolineValues[index]++;
-            index += jumps;
+    public int performMovePartTwo(String input) {
+        getTrampolineValues(input);
+
+        while(index < trampolineValues.length) {
+            if (trampolineValues[index] == 0) {
+                trampolineValues[index]++;
+            } else if (trampolineValues[index] >= 3) {
+                int jumps = trampolineValues[index];
+                trampolineValues[index]--;
+                index += jumps;
+            } else {
+                int jumps = trampolineValues[index];
+                trampolineValues[index]++;
+                index += jumps;
+            }
+            steps++;
         }
-        steps++;
+        return steps;
     }
 
-    private void getTrampolineValues(String s) {
-        String[] intValues = s.split("\n");
+    private void getTrampolineValues(String input) {
+        String[] intValues = input.split("\n");
         trampolineValues = new int[intValues.length];
         for(int i = 0; i < intValues.length; i++) {
             trampolineValues[i] = Integer.parseInt(String.valueOf(intValues[i]));
         }
     }
 
+<<<<<<< HEAD
     static String input = "1\n" +
+=======
+    public static void main(String[] args) {
+        AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
+
+        adventOfCodeDayFive.getTrampolineValues(inputValues);
+        System.out.println(adventOfCodeDayFive.performMovePartOne(inputValues));
+
+        adventOfCodeDayFive = new AdventOfCodeDayFive();
+
+        adventOfCodeDayFive.getTrampolineValues(inputValues);
+        System.out.println(adventOfCodeDayFive.performMovePartTwo(inputValues));
+
+
+    }
+
+    private static String inputValues = "1\n" +
+>>>>>>> b35c03bcd512210346378e088f2b2c8052ea955c
             "1\n" +
             "0\n" +
             "-1\n" +
@@ -1095,7 +1133,10 @@ public class AdventOfCodeDayFive {
             "-353\n" +
             "-950\n" +
             "-410";
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> b35c03bcd512210346378e088f2b2c8052ea955c
 }

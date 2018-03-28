@@ -8,12 +8,9 @@ public class AdventOfCodeDayNine {
     public int getNumberOfValidGroups(String s) {
         String[] values = s.split("");
         int numberOfValidGroups = 0;
-        int openCurly = 0;
-        int closeCurly = 0;
-        int runningScore = 0;
-        score = 0;
-        for(int i = 0; i < values.length; i++) {
+        int openCurly = 0, closeCurly = 0, runningScore = 0, score = 0;
 
+        for(int i = 0; i < values.length; i++) {
             if(values[i].equals("{")) {
                 openCurly++;
                 runningScore++;

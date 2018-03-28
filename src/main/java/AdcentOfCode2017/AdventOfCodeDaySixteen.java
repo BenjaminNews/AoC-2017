@@ -48,7 +48,7 @@ public class AdventOfCodeDaySixteen {
         stringValue.set(positionB, programAValue);
     }
 
-    private String getListAsString() {
+    public String getListAsString() {
         String s = "";
         for(String s1: stringValue) {
             s += s1;

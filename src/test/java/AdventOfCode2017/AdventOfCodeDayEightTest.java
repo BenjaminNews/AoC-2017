@@ -10,7 +10,7 @@ import static junit.framework.TestCase.assertEquals;
 public class AdventOfCodeDayEightTest {
 
     @Test
-    public void largestValueInRegisterReturnsOnet() {
+    public void largestValueInRegisterReturnsOne() {
         AdventOfCodeDayEight adventOfCodeDayEight = new AdventOfCodeDayEight();
 
         ArrayList<String> instructions = new ArrayList<String>();
@@ -21,6 +21,21 @@ public class AdventOfCodeDayEightTest {
 
         int res = adventOfCodeDayEight.getLargestValueInRegister(instructions);
         assertEquals(1, res);
+    }
 
+    @Test
+    public void largestValueEverHeldInRegisterReturnsTen() {
+        AdventOfCodeDayEight adventOfCodeDayEight = new AdventOfCodeDayEight();
+
+        ArrayList<String> instructions = new ArrayList<String>();
+        instructions.add("b inc 5 if a > 1");
+        instructions.add("a inc 1 if b < 5");
+        instructions.add("c dec -10 if a >= 1");
+        instructions.add("c inc -20 if c == 10");
+
+        adventOfCodeDayEight.getLargestValueInRegister(instructions);
+
+        int res = adventOfCodeDayEight.getLargestEverValue();
+        assertEquals(10, res);
     }
 }

@@ -1,0 +1,11 @@
+.gradle/
+.idea/*
+AoC.iml
+build.gradle
+build/
+gradle/
+gradlew
+gradlew.bat
+hs_err*
+out/
+settings.gradle

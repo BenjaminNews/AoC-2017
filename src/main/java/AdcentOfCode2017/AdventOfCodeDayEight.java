@@ -10,12 +10,6 @@ public class AdventOfCodeDayEight {
     private HashMap<String, Integer> registerValues = new HashMap<String, Integer>();
     private ArrayList<Integer> allValues = new ArrayList<Integer>();
 
-    public static void main(String[] args) {
-        AdventOfCodeDayEight adventOfCodeDayEight = new AdventOfCodeDayEight();
-        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(input.split("\n")));
-        adventOfCodeDayEight.getLargestValueInRegister(arrayList);
-    }
-
     public int getLargestValueInRegister(ArrayList<String> instructions) {
 
         for(String s : instructions) {
@@ -35,24 +29,32 @@ public class AdventOfCodeDayEight {
 
             int checkValue = registerValues.get(comparatorKey);
 
-            if(comparatorFunction.toString().equals(">")) {
-                largerThanImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
-            } else if(comparatorFunction.toString().equals("<")) {
-                smallerThanImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
-            } else if(comparatorFunction.toString().equals(">=")) {
-                largerThanOrEqualToImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
-            } else if(comparatorFunction.toString().equals("<=")) {
-                smallerThanOrEqualToImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
-            } else if(comparatorFunction.toString().equals("==")) {
-                equalToImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
-            } else if(comparatorFunction.toString().equals("!=")) {
-                notEqualToImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
-            }
+            implementOperation(valueToBeModified, arithmeticFunction, arthmeticValue, comparatorFunction, comparatorValue, checkValue);
         }
+
+        return getLargestValue();
+    }
+
+    public int getLargestEverValue() {
         Collections.sort(allValues);
         Collections.reverse(allValues);
-        System.out.println("largest ever value: " + allValues.get(0));
-        return getLargestValue();
+        return allValues.get(0);
+    }
+
+    private void implementOperation(String valueToBeModified, String arithmeticFunction, int arthmeticValue, String comparatorFunction, int comparatorValue, int checkValue) {
+        if(comparatorFunction.toString().equals(">")) {
+            largerThanImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
+        } else if(comparatorFunction.toString().equals("<")) {
+            smallerThanImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
+        } else if(comparatorFunction.toString().equals(">=")) {
+            largerThanOrEqualToImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
+        } else if(comparatorFunction.toString().equals("<=")) {
+            smallerThanOrEqualToImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
+        } else if(comparatorFunction.toString().equals("==")) {
+            equalToImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
+        } else if(comparatorFunction.toString().equals("!=")) {
+            notEqualToImplementation(valueToBeModified, arithmeticFunction, comparatorValue, checkValue, arthmeticValue);
+        }
     }
 
     private void performAction(String valueToBeModified, String arithmeticFunction, int arthmeticValue) {
@@ -112,8 +114,14 @@ public class AdventOfCodeDayEight {
             i++;
         }
         Arrays.sort(values);
-        System.out.println("largest value at end of instructions: " + values[values.length-1]);
         return values[values.length -1];
+    }
+
+    public static void main(String[] args) {
+        AdventOfCodeDayEight adventOfCodeDayEight = new AdventOfCodeDayEight();
+        ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(input.split("\n")));
+        System.out.println(adventOfCodeDayEight.getLargestValueInRegister(arrayList));
+        System.out.println(adventOfCodeDayEight.getLargestEverValue());
     }
 
     private static String input = "um inc -671 if lbf != 5\n" +
