@@ -1,4 +1,4 @@
-package AdcentOfCode2017;
+package AdventOfCode2017;
 
 import java.util.ArrayList;
 import java.util.HashMap;

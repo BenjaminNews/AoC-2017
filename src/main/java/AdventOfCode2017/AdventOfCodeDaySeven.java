@@ -1,73 +1,179 @@
 package AdcentOfCode2017;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class AdventOfCodeDaySeven {
 
-    private HashMap<String, ArrayList<String>> supportingTowers = new HashMap<>();
+    private HashMap<String, ArrayList<Disk>> supportingTowers = new HashMap<>();
+    private ArrayList<Disk> allDisks = new ArrayList<>();
 
-    public void setUp(String input) {
-
+    public void createDisks(String input) {
         String[] levels = input.split("\n");
 
         for(String s: levels) {
-            if (s.contains("->")) {
+            String name = "";
+            int weight = 0;
+            if(s.contains("->")) {
+                name = s.split(" -> ")[0].split(" ")[0];
+                weight = Integer.parseInt(s.split(" ")[1].substring(1, s.split(" ")[1].length() - 1));
+            } else {
+                name = s.split(" ")[0];
+                weight = Integer.parseInt(s.split(" ")[1].substring(1, s.split(" ")[1].length() - 1));
+            }
+            Disk disk = new Disk(name, weight);
+            allDisks.add(disk);
+        }
 
-                String parentTowerName = s.split(" -> ")[0].split(" ")[0];
-                String[] towerChildren = s.split(" -> ")[1].split(", ");
+        generateConnections(input);
+    }
 
-                ArrayList<String> childTowers = new ArrayList<>();
+    private void generateConnections(String input) {
+        String[] levels = input.split("\n");
 
-                for(int i = 0; i < towerChildren.length; i++) {
-                    childTowers.add(towerChildren[i]);
+        for(String s : levels) {
+            if(s.contains("->")) {
+                String parentDiskName = s.split(" -> ")[0].split(" ")[0];
+                String[] childDisks = s.split(" -> ")[1].split(", ");
+                ArrayList<Disk> disksForCollection = new ArrayList<>();
+                for(String child : childDisks) {
+                    for(int i = 0; i < allDisks.size(); i++) {
+                        Disk disk = allDisks.get(i);
+                        if(disk.getName().equals(child)) {
+                            disksForCollection.add(allDisks.get(i));
+                        }
+                    }
                 }
-                supportingTowers.put(parentTowerName, childTowers);
+                supportingTowers.put(parentDiskName, disksForCollection);
             }
         }
     }
 
     public String getBaseTower() {
-        ArrayList<String> collectionOfChildrenToRemove = new ArrayList<>();
-        while(supportingTowers.size() > 1) {
-            generateReductionCollection(collectionOfChildrenToRemove);
-            reduceCollection(collectionOfChildrenToRemove);
-        }
-        return supportingTowers.keySet().iterator().next();
-    }
+        ArrayList<String> disksToRemove = new ArrayList<>();
 
-    private void reduceCollection(ArrayList<String> collectionOfChildrenToRemove) {
-        if(collectionOfChildrenToRemove.size() > 0) {
-            for(String child : collectionOfChildrenToRemove) {
-                if(supportingTowers.containsKey(child)) {
-                    supportingTowers.remove(child);
-                }
-            }
-            collectionOfChildrenToRemove.clear();
-        }
-    }
-
-    private void generateReductionCollection(ArrayList<String> collectionOfChildrenToRemove) {
-        for (String s : supportingTowers.keySet()) {
-            ArrayList<String> childrenTowerNames = supportingTowers.get(s);
-            for(int i = 0; i < childrenTowerNames.size(); i++) {
-                String childName = childrenTowerNames.get(i);
-                if(supportingTowers.containsKey(childName)) {
-                    for(String child: childrenTowerNames) {
-                        collectionOfChildrenToRemove.add(child);
+        for (String towerName : supportingTowers.keySet()) {
+            ArrayList<Disk> towersDisk = supportingTowers.get(towerName);
+            for (int i = 0; i < towersDisk.size(); i++) {
+                String towerNameTwo = towersDisk.get(i).getName();
+                if(!towerName.equals(towerNameTwo)) {
+                    if(supportingTowers.containsKey(towerNameTwo)) {
+                        disksToRemove.add(towerNameTwo);
                     }
-                    break;
                 }
             }
+        }
+        return reduceTower(disksToRemove);
+    }
+
+    private String reduceTower(ArrayList<String> towersToRemove) {
+        while(supportingTowers.size() != 1) {
+            for(int i = 0; i < towersToRemove.size(); i++) {
+                if(supportingTowers.containsKey(towersToRemove.get(i))) {
+                    supportingTowers.remove(towersToRemove.get(i));
+                    towersToRemove.remove(towersToRemove.get(i));
+                }
+            }
+        }
+
+        Object remainingDisk = supportingTowers.keySet().toArray()[0];
+        return remainingDisk.toString();
+    }
+
+    public int getTowerWeight(String towerName) {
+        int totalWeight = 0;
+        ArrayList<Disk> towerChildDisk = supportingTowers.get(towerName);
+        for(Disk d: towerChildDisk) {
+            totalWeight += d.getWeight();
+        }
+        totalWeight += allDisks.get(getDiskIndex(towerName)).getWeight();
+        return totalWeight;
+    };
+
+    public int getOutOfBalanceStack() {
+        //check if value is not there at the end, if true then fails
+        String diskName = "";
+        for(String towerName : supportingTowers.keySet()) {
+            ArrayList<Integer> allWeights = new ArrayList<>();
+            if (checkChildrenAreKeys(towerName) == true) {
+                ArrayList<Disk> childrenDisks = supportingTowers.get(towerName);
+                for (int i = 0; i < childrenDisks.size(); i++) {
+                    Disk d = childrenDisks.get(i);
+                    int weight = getTowerWeight(d.getName());
+                    System.out.println("end weight: " + weight);
+                    allWeights.add(weight);
+                    diskName = d.getName();
+                    System.out.println("disk name: " + diskName);
+                }
+                if (getOddOneOut(allWeights) != -1) {
+                    return getOddOneOut(allWeights);
+                }
+            }
+        }
+        return -1;
+    }
+
+    private int getOddOneOut(ArrayList<Integer> disks) {
+        Collections.sort(disks);
+        int diskSizeOne = disks.get(0);
+        int diskSizeTwo = disks.get(disks.size() -1);
+        if(diskSizeOne != diskSizeTwo) {
+            int newWeight = diskSizeTwo - (diskSizeTwo - diskSizeOne);
+            System.out.println("new disk weight: " + newWeight);
+            return newWeight;
+        }
+        return -1;
+    }
+
+    private boolean checkChildrenAreKeys(String towerName) {
+        ArrayList<Disk> childrenDisks = supportingTowers.get(towerName);
+        for(Disk d: childrenDisks) {
+            if(!supportingTowers.containsKey(d.getName())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int getDiskIndex(String towerName) {
+        for(int i = 0; i < allDisks.size(); i++) {
+            if(allDisks.get(i).getName().equals(towerName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private class Disk {
+
+        private String name;
+        private int weight;
+
+        private Disk (String name, int weight) {
+            this.name = name;
+            this.weight = weight;
+        }
+
+        private int getWeight() {
+            return weight;
+        }
+
+        public String getName() {
+            return name;
         }
     }
 
     public static void main(String[] args) {
         AdventOfCodeDaySeven adventOfCodeDaySeven = new AdventOfCodeDaySeven();
+        adventOfCodeDaySeven.createDisks(input);
+        String baseTowerName = adventOfCodeDaySeven.getBaseTower();
+        System.out.println("Base tower: " + baseTowerName);
 
-        adventOfCodeDaySeven.setUp(input);
-
-        System.out.println("Base tower: " + adventOfCodeDaySeven.getBaseTower());
+        adventOfCodeDaySeven = new AdventOfCodeDaySeven();
+        adventOfCodeDaySeven.createDisks(input);
+        int result = adventOfCodeDaySeven.getOutOfBalanceStack();
+        System.out.println("result: " + result);
     }
 
     private static final String input = "nzyiue (57)\n" +

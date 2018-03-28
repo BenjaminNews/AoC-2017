@@ -1,4 +1,4 @@
-package AdcentOfCode2017;
+package AdventOfCode2017;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
