@@ -11,8 +11,8 @@ public class AdventOfCodeDayTwo {
         int runningScore = 0;
 
         for(int line = 0; line < lines.length; line++) {
-            //String[] values = lines[line].split(" "); // for tests
-            String[] values = lines[line].split("\t");
+            String[] values = lines[line].split(" "); // for tests
+            //String[] values = lines[line].split("\t");
             int[] allValues = Arrays.stream(values).mapToInt(Integer::parseInt).toArray();
 
             Arrays.sort(allValues);
