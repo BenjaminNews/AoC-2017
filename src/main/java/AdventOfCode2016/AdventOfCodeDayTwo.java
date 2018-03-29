@@ -42,24 +42,28 @@ public class AdventOfCodeDayTwo {
                     stepRightTwo();
                 }
             }
-            if(position == 10) {
-               passcode += "A";
-            } else if(position == 11) {
-                passcode += "B";
-            } else if(position == 12) {
-                passcode += "C";
-            } else if(position == 13) {
-                passcode += "D";
-            } else {
-                passcode += String.valueOf(position);
-            }
+            buildPassCode();
         }
         return passcode;
     }
 
+    private void buildPassCode() {
+        if(position == 10) {
+           passcode += "A";
+        } else if(position == 11) {
+            passcode += "B";
+        } else if(position == 12) {
+            passcode += "C";
+        } else if(position == 13) {
+            passcode += "D";
+        } else {
+            passcode += String.valueOf(position);
+        }
+    }
+
     private void stepUp() {
 
-        if(position >= 4) {
+        if(position > 3) {
             position -= 3;
         }
     }
@@ -83,7 +87,7 @@ public class AdventOfCodeDayTwo {
     }
 
     private void stepRightTwo() {
-        if((position >= 2 && (position < 5)) || (position > 4 && (position < 9)) || (position > 9 && position < 12)) {
+        if((position > 1 && position < 5) || (position > 4 && position < 9) || (position > 9 && position < 12)) {
             position += 1;
         }
     }
@@ -91,7 +95,7 @@ public class AdventOfCodeDayTwo {
     private void stepDownTwo() {
         if(position == 11 || position == 1) {
             position += 2;
-        } else if(position != 5 && position != 9 && position != 10 && position != 12 && position != 13) {
+        } else if((position % 4 != 1) && position != 10 && position != 12) {
             position += 4;
         }
     }
@@ -107,7 +111,7 @@ public class AdventOfCodeDayTwo {
             position = 11;
         } else if(position == 3) {
             position = 1;
-        }  else if (position != 5 && position != 2 && position != 4 && position != 9 && position != 1) {
+        }  else if ((position % 4 != 1) && position != 2 && position != 4 && position != 1) {
             position -= 4;
         }
     }
