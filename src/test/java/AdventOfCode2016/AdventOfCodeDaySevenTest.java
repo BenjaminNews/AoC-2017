@@ -59,9 +59,9 @@ public class AdventOfCodeDaySevenTest {
         AdventOfCodeDaySeven adventOfCodeDaySeven = new AdventOfCodeDaySeven();
 
         String input = "abba[mnop]qrst\n" +
-                       "ioxxoj[asdfgh]zxcvbn\n" +
-                       "abcd[bddb]xyyx\n";//+
-                       //"ioxxoj[asdfgh]zxcvbn";
+                       "aaaa[qwer]tyui\n" +
+                       "abcd[bddb]xyyx\n" +
+                       "ioxxoj[asdfgh]zxcvbn";
 
         adventOfCodeDaySeven.setUp(input);
 
@@ -80,11 +80,48 @@ public class AdventOfCodeDaySevenTest {
     }
 
     @Test
-    public void inputSupportsSSL() {
+    public void invalidTwo() {
         AdventOfCodeDaySeven adventOfCodeDaySeven = new AdventOfCodeDaySeven();
-        String input = "aba[bab]xyz";
+        String input = "snwnqixjgwhcrpfeun[mvseymbltdzywnw]xbogzgtddtzzadgsrin[sibgoazaxuyfaaf]tdtrrjbxjzusuvzogpa[etytgiqwoyxevcq]ifanoaaqoldczzj";
         adventOfCodeDaySeven.setUp(input);
+        int valid = adventOfCodeDaySeven.getValidCount();
 
-        //assertEquals(1, valid);
+        assertEquals(0, valid);
     }
+
+//    @Test
+//    public void inputSupportsSSL() {
+//        AdventOfCodeDaySeven adventOfCodeDaySeven = new AdventOfCodeDaySeven();
+//        String input = "aba[bab]xyz";
+//        adventOfCodeDaySeven.setUp(input);
+//        int valid = adventOfCodeDaySeven.getValidCountPartTwo();
+//        assertEquals(1, valid);
+//    }
+//
+//    @Test
+//    public void inputDoesNotSupportsSSL() {
+//        AdventOfCodeDaySeven adventOfCodeDaySeven = new AdventOfCodeDaySeven();
+//        String input = "xyx[xyx]xyx";
+//        adventOfCodeDaySeven.setUp(input);
+//        int valid = adventOfCodeDaySeven.getValidCountPartTwo();
+//        assertEquals(0, valid);
+//    }
+//
+//    @Test
+//    public void inputSupportsSSLTwo() {
+//        AdventOfCodeDaySeven adventOfCodeDaySeven = new AdventOfCodeDaySeven();
+//        String input = "aaa[kek]eke";
+//        adventOfCodeDaySeven.setUp(input);
+//        int valid = adventOfCodeDaySeven.getValidCountPartTwo();
+//        assertEquals(1, valid);
+//    }
+//
+//    @Test
+//    public void inputSupportsSSLThree() {
+//        AdventOfCodeDaySeven adventOfCodeDaySeven = new AdventOfCodeDaySeven();
+//        String input = "azbz[bzb]cdb";
+//        adventOfCodeDaySeven.setUp(input);
+//        int valid = adventOfCodeDaySeven.getValidCountPartTwo();
+//        assertEquals(1, valid);
+//    }
 }

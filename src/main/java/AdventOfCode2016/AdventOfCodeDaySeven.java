@@ -1,22 +1,32 @@
 package AdventOfCode2016;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AdventOfCodeDaySeven {
+
     private String[] dataLines;
+
     private int total = 0;
+
+    private ArrayList<String> matchingPairsInsideBrackets = new ArrayList<>();
+    private ArrayList<String> matchingPairsOutsideBrackets = new ArrayList<>();
 
     public void setUp(String input) {
         dataLines = input.split("\n");
     }
 
     public int getValidCount() {
-        for (int i = 0; i < dataLines.length; i++) {
-            String[] outsideBracketValues = dataLines[i].split("\\[.*?\\]");
-            if(checkBracketValuesIsValid(dataLines[i]) == true) {
-                if(checkInnerValuesAreValid(dataLines[i])) {
+        for(String line: dataLines) {
+            matchingPairsInsideBrackets.clear();
+            matchingPairsOutsideBrackets.clear();
+            checkInnerValues(line);
+            if(matchingPairsInsideBrackets.size() == 0) {
+                checkOuterValues(line);
+                if(matchingPairsOutsideBrackets.size() > 0) {
+                    System.out.println("passed line: " + line);
                     total++;
                 }
             }
@@ -24,76 +34,57 @@ public class AdventOfCodeDaySeven {
         return total;
     }
 
-    private boolean checkBracketValuesIsValid(String dataLine) {
+    private void checkOuterValues(String dataLine) {
+        String[] valuesOutsideBrackets = dataLine.split("\\[.*?\\]")  ;
+        int index = 0;
+        for(String sections: valuesOutsideBrackets) {
+            while(index + 3 < sections.length()) {
+                char[] individualValues = new char[]{sections.charAt(index), sections.charAt(index + 1),
+                        sections.charAt((index + 2)), sections.charAt(index + 3)};
+                if (checkValuesMatch(individualValues)) {
+                    matchingPairsOutsideBrackets.add(String.valueOf(individualValues));
+                }
+                index++;
+            }
+            index = 0;
+        }
+    }
+
+    private void checkInnerValues(String dataLine) {
         Pattern p = Pattern.compile("\\[.*?\\]");
         Matcher m = p.matcher(dataLine);
-
         while(m.find()) {
-            String s = m.group();
-            int index = 0;
-
-            char[] individualCharacterValues = s.toCharArray();
-            while(index + 3 < individualCharacterValues.length) {
-                char[] charactersToCheck = Arrays.copyOfRange(individualCharacterValues, index, index + 4);
-                if(charactersToCheck[0] == charactersToCheck[1] && charactersToCheck[1] == charactersToCheck[2]) {
-                    return false;
-                } else {
-                    if(charactersToCheck[0] == charactersToCheck[3] && charactersToCheck[1] == charactersToCheck[2]) {
-                        return false;
-                    }
+            char[] elementValue = m.group().toCharArray();
+            for(int index = 0; index < elementValue.length; index++) {
+                char[] checkValue = Arrays.copyOfRange(elementValue, index, index + 4);
+                if (checkValuesMatch(checkValue)) {
+                    matchingPairsInsideBrackets.add(String.valueOf(checkValue));
                 }
-                index++;
             }
         }
-        return true;
     }
 
-    private boolean checkInnerValuesAreValid(String dataLine) {
-        String[] valuesOutsideBrackets = dataLine.split("\\[.*?\\]");
-        boolean valid = false;
-        int index = 0;
-        for(int i = 0; i < valuesOutsideBrackets.length; i++) {
-            char[] individualCharacterValues = valuesOutsideBrackets[i].toCharArray();
-            while(index + 3 < individualCharacterValues.length) {
-                char characterOne = individualCharacterValues[index];
-                char characterTwo = individualCharacterValues[index + 1];
-                char characterThree = individualCharacterValues[index + 2];
-                char characterFour = individualCharacterValues[index + 3];
-                if(characterOne == characterTwo && characterTwo == characterThree) {
-                    return false;
-                } else {
-                    if(characterOne == characterFour && characterTwo == characterThree) {
-                        return true;
-                    }
-                }
-                index++;
+    private boolean checkValuesMatch(char[] individualCharacters) {
+        if ((individualCharacters[0] == individualCharacters[3]) && (individualCharacters[1] == individualCharacters[2])) {
+            if(individualCharacters[0] != individualCharacters[1]
+            && individualCharacters[2] != individualCharacters[3]) {
+                return true;
             }
         }
-        return valid;
-    }
-
-    private void checkOuterValuesAreValid() {
-
+        return false;
     }
 
     public static void main(String[] args) {
         AdventOfCodeDaySeven adventOfCodeDaySeven = new AdventOfCodeDaySeven();
-
         adventOfCodeDaySeven.setUp(inputOne);
-        int total = adventOfCodeDaySeven.getValidCount();
-        System.out.println("valid count: " + total);
-
+        adventOfCodeDaySeven.getValidCount();
         adventOfCodeDaySeven.setUp(inputTwo);
-        total+= adventOfCodeDaySeven.getValidCount();
-        System.out.println("valid count: " + total);
-
+        adventOfCodeDaySeven.getValidCount();
         adventOfCodeDaySeven.setUp(inputThree);
-        total+= adventOfCodeDaySeven.getValidCount();
-        System.out.println("valid count: " + total);
-
+        adventOfCodeDaySeven.getValidCount();
         adventOfCodeDaySeven.setUp(inputFour);
-        total+= adventOfCodeDaySeven.getValidCount();
-        System.out.println("valid count: " + total);
+        System.out.println(adventOfCodeDaySeven.getValidCount());
+
     }
 
     private static final String inputOne = "rhamaeovmbheijj[hkwbkqzlcscwjkyjulk]ajsxfuemamuqcjccbc\n" +
