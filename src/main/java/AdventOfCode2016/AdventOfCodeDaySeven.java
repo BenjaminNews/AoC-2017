@@ -11,8 +11,11 @@ public class AdventOfCodeDaySeven {
 
     private int total = 0;
 
-    private ArrayList<String> matchingPairsInsideBrackets = new ArrayList<>();
-    private ArrayList<String> matchingPairsOutsideBrackets = new ArrayList<>();
+    private ArrayList<String> matchingPairsInsideBracketsPartOne = new ArrayList<>();
+    private ArrayList<String> matchingPairsOutsideBracketsPartOne = new ArrayList<>();
+
+    private ArrayList<String> matchingPairsInsideBracketsPartTwo = new ArrayList<>();
+    private ArrayList<String> matchingPairsOutsideBracketsPartTwo = new ArrayList<>();
 
     public void setUp(String input) {
         dataLines = input.split("\n");
@@ -20,13 +23,12 @@ public class AdventOfCodeDaySeven {
 
     public int getValidCount() {
         for(String line: dataLines) {
-            matchingPairsInsideBrackets.clear();
-            matchingPairsOutsideBrackets.clear();
+            matchingPairsInsideBracketsPartOne.clear();
+            matchingPairsOutsideBracketsPartOne.clear();
             checkInnerValues(line);
-            if(matchingPairsInsideBrackets.size() == 0) {
+            if(matchingPairsInsideBracketsPartOne.size() == 0) {
                 checkOuterValues(line);
-                if(matchingPairsOutsideBrackets.size() > 0) {
-                    System.out.println("passed line: " + line);
+                if(matchingPairsOutsideBracketsPartOne.size() > 0) {
                     total++;
                 }
             }
@@ -36,17 +38,15 @@ public class AdventOfCodeDaySeven {
 
     private void checkOuterValues(String dataLine) {
         String[] valuesOutsideBrackets = dataLine.split("\\[.*?\\]")  ;
-        int index = 0;
         for(String sections: valuesOutsideBrackets) {
+            int index = 0;
             while(index + 3 < sections.length()) {
-                char[] individualValues = new char[]{sections.charAt(index), sections.charAt(index + 1),
-                        sections.charAt((index + 2)), sections.charAt(index + 3)};
+                char[] individualValues = new char[]{sections.charAt(index), sections.charAt(index + 1), sections.charAt((index + 2)), sections.charAt(index + 3)};
                 if (checkValuesMatch(individualValues)) {
-                    matchingPairsOutsideBrackets.add(String.valueOf(individualValues));
+                    matchingPairsOutsideBracketsPartOne.add(String.valueOf(individualValues));
                 }
                 index++;
             }
-            index = 0;
         }
     }
 
@@ -58,7 +58,7 @@ public class AdventOfCodeDaySeven {
             for(int index = 0; index < elementValue.length; index++) {
                 char[] checkValue = Arrays.copyOfRange(elementValue, index, index + 4);
                 if (checkValuesMatch(checkValue)) {
-                    matchingPairsInsideBrackets.add(String.valueOf(checkValue));
+                    matchingPairsInsideBracketsPartOne.add(String.valueOf(checkValue));
                 }
             }
         }
@@ -66,12 +66,68 @@ public class AdventOfCodeDaySeven {
 
     private boolean checkValuesMatch(char[] individualCharacters) {
         if ((individualCharacters[0] == individualCharacters[3]) && (individualCharacters[1] == individualCharacters[2])) {
-            if(individualCharacters[0] != individualCharacters[1]
-            && individualCharacters[2] != individualCharacters[3]) {
+            if(individualCharacters[0] != individualCharacters[1] && individualCharacters[2] != individualCharacters[3]) {
                 return true;
             }
         }
         return false;
+    }
+
+    private void checkOuterValuesPartTwo(String dataLine) {
+        String[] valuesOutsideBrackets = dataLine.split("\\[.*?\\]")  ;
+        for(String sections: valuesOutsideBrackets) {
+            int index = 0;
+            while(index + 2 < sections.length()) {
+                char[] individualValues = new char[]{sections.charAt(index), sections.charAt(index + 1),
+                        sections.charAt((index + 2))};
+                if (checkValuesMatchPartTwo(individualValues)) {
+                    String addValue = String.valueOf(individualValues[1]) + String.valueOf(individualValues[0]) + String.valueOf(individualValues[1]);
+                    matchingPairsOutsideBracketsPartTwo.add(String.valueOf(addValue));
+                }
+                index++;
+            }
+        }
+    }
+
+    private void checkInnerValuesPartTwo(String dataLine) {
+        Pattern p = Pattern.compile("\\[.*?\\]");
+        Matcher m = p.matcher(dataLine);
+        while(m.find()) {
+            char[] elementValue = m.group().toCharArray();
+            for(int index = 1; index < elementValue.length; index++) {
+                char[] checkValue = Arrays.copyOfRange(elementValue, index, index + 3);
+                if (checkValuesMatchPartTwo(checkValue)) {
+                    matchingPairsInsideBracketsPartTwo.add(String.valueOf(checkValue));
+                }
+            }
+        }
+    }
+
+    private boolean checkValuesMatchPartTwo(char[] individualCharacters) {
+        if (individualCharacters[0] == individualCharacters[2]) {
+            if(individualCharacters[0] != individualCharacters[1] && individualCharacters[1] != individualCharacters[2]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getValidCountPartTwo() {
+        for(String line: dataLines) {
+            matchingPairsInsideBracketsPartTwo.clear();
+            matchingPairsOutsideBracketsPartTwo.clear();
+            checkInnerValuesPartTwo(line);
+            checkOuterValuesPartTwo(line);
+            if(matchingPairsOutsideBracketsPartTwo.size() > 0 && matchingPairsOutsideBracketsPartTwo.size() > 0) {
+                for(String s: matchingPairsInsideBracketsPartTwo) {
+                    if (matchingPairsOutsideBracketsPartTwo.contains(s)) {
+                        total++;
+                        break;
+                    }
+                }
+            }
+        }
+        return total;
     }
 
     public static void main(String[] args) {
@@ -83,8 +139,17 @@ public class AdventOfCodeDaySeven {
         adventOfCodeDaySeven.setUp(inputThree);
         adventOfCodeDaySeven.getValidCount();
         adventOfCodeDaySeven.setUp(inputFour);
-        System.out.println(adventOfCodeDaySeven.getValidCount());
+        System.out.println("part one: " + adventOfCodeDaySeven.getValidCount());
 
+        adventOfCodeDaySeven = new AdventOfCodeDaySeven();
+        adventOfCodeDaySeven.setUp(inputOne);
+        adventOfCodeDaySeven.getValidCountPartTwo();
+        adventOfCodeDaySeven.setUp(inputTwo);
+        adventOfCodeDaySeven.getValidCountPartTwo();
+        adventOfCodeDaySeven.setUp(inputThree);
+        adventOfCodeDaySeven.getValidCountPartTwo();
+        adventOfCodeDaySeven.setUp(inputFour);
+        System.out.println("part two: " + adventOfCodeDaySeven.getValidCountPartTwo());
     }
 
     private static final String inputOne = "rhamaeovmbheijj[hkwbkqzlcscwjkyjulk]ajsxfuemamuqcjccbc\n" +
