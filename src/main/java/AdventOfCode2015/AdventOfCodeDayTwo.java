@@ -17,6 +17,7 @@ public class AdventOfCodeDayTwo {
             int width = Integer.parseInt(lengths[1]);
             int height = Integer.parseInt(lengths[2]);
             int area = 2 * (length * width) + 2 * (width * height) + 2 * (height * length);
+
             wrappingPaperSize += area + getSmallestArea(length, width, height);
             bowLenght += calculateBowLength(length, width, height);
         }
