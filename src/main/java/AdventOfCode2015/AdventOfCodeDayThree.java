@@ -8,7 +8,7 @@ public class AdventOfCodeDayThree {
     private int yPositionSanta = 0;
     private int xPositionRobotSanta = 0;
     private int yPositionRobotSanta = 0;
-    
+
     private ArrayList<String> housesVisited = new ArrayList();
 
     public int deliverPresents(String input) {
