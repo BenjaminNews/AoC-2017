@@ -9,26 +9,26 @@ public class AdventOfCodeDaySix {
         for(String action : input.split("\n")) {
 
             if(action.contains("turn on")) {
-                int startRangeX = Integer.parseInt(action.replace("turn on ", "").split(" through ")[0].split(",")[0]);
-                int startRangeY = Integer.parseInt(action.replace("turn on ", "").split(" through ")[0].split(",")[1]);
-                int endRangeX = Integer.parseInt(action.replace("turn on ", "").split(" through ")[1].split(",")[0]);
-                int endRangeY = Integer.parseInt(action.replace("turn on ", "").split(" through ")[1].split(",")[1]);
-                turnLightsOn(startRangeX, startRangeY, endRangeX, endRangeY);
+                int[] actionValues = getValues(action, "turn on ");
+                turnLightsOn(actionValues[0], actionValues[1], actionValues[2], actionValues[3]);
             } else if(action.contains("turn off")) {
-                int startRangeX = Integer.parseInt(action.replace("turn off ", "").split(" through ")[0].split(",")[0]);
-                int startRangeY = Integer.parseInt(action.replace("turn off ", "").split(" through ")[0].split(",")[1]);
-                int endRangeX = Integer.parseInt(action.replace("turn off ", "").split(" through ")[1].split(",")[0]);
-                int endRangeY = Integer.parseInt(action.replace("turn off ", "").split(" through ")[1].split(",")[1]);
-                turnLightsOff(startRangeX, startRangeY, endRangeX, endRangeY);
+                int[] actionValues = getValues(action,"turn off ");
+                turnLightsOff(actionValues[0], actionValues[1], actionValues[2], actionValues[3]);
             } else if(action.contains("toggle")) {
-                int startRangeX = Integer.parseInt(action.replace("toggle ", "").split(" through ")[0].split(",")[0]);
-                int startRangeY = Integer.parseInt(action.replace("toggle ", "").split(" through ")[0].split(",")[1]);
-                int endRangeX = Integer.parseInt(action.replace("toggle ", "").split(" through ")[1].split(",")[0]);
-                int endRangeY = Integer.parseInt(action.replace("toggle ", "").split(" through ")[1].split(",")[1]);
-                toggleLights(startRangeX, startRangeY, endRangeX, endRangeY);
+                int[] actionValues = getValues(action,"toggle ");
+                toggleLights(actionValues[0], actionValues[1], actionValues[2], actionValues[3]);
             }
         }
         return getCountOfLightsOn();
+    }
+
+    private int[] getValues(String action, String command) {
+        int[] values = new int[4];
+        values[0] = Integer.parseInt(action.replace(command, "").split(" through ")[0].split(",")[0]);
+        values[1] = Integer.parseInt(action.replace(command, "").split(" through ")[0].split(",")[1]);
+        values[2] = Integer.parseInt(action.replace(command, "").split(" through ")[1].split(",")[0]);
+        values[3] = Integer.parseInt(action.replace(command, "").split(" through ")[1].split(",")[1]);
+        return values;
     }
 
     private void turnLightsOn(int startRangeX, int startRangeY, int endRangeX, int endRangeY) {
@@ -59,13 +59,56 @@ public class AdventOfCodeDaySix {
         int count = 0;
         for(int x = 0; x < 1000; x++) {
             for(int y = 0; y < 1000; y++) {
-                if(lightGrid[x][y] == 1)
-                    count++;
+                if(lightGrid[x][y] > 0)
+                    count+= lightGrid[x][y];
             }
         }
         return count;
     }
 
+    public int performActionPartTwo(String input) {
+
+        for(String action : input.split("\n")) {
+
+            if(action.contains("turn on")) {
+                int[] actionValues = getValues(action, "turn on ");
+                turnLightsOnPartTwo(actionValues[0], actionValues[1], actionValues[2], actionValues[3]);
+            } else if(action.contains("turn off")) {
+                int[] actionValues = getValues(action, "turn off ");
+                turnLightsOffPartTwo(actionValues[0], actionValues[1], actionValues[2], actionValues[3]);
+            } else if(action.contains("toggle")) {
+                int[] actionValues = getValues(action, "toggle ");
+                toggleLightsPartTwo(actionValues[0], actionValues[1], actionValues[2], actionValues[3]);
+            }
+        }
+        return getCountOfLightsOn();
+    }
+
+    private void turnLightsOnPartTwo(int startRangeX, int startRangeY, int endRangeX, int endRangeY) {
+        for(int x = startRangeX; x <= endRangeX; x++) {
+            for(int y = startRangeY; y <= endRangeY; y++) {
+                lightGrid[x][y]++;
+            }
+        }
+    }
+
+    private void turnLightsOffPartTwo(int startRangeX, int startRangeY, int endRangeX, int endRangeY) {
+        for(int x = startRangeX; x <= endRangeX; x++) {
+            for(int y = startRangeY; y <= endRangeY; y++) {
+                if(lightGrid[x][y] > 0) {
+                    lightGrid[x][y]--;
+                }
+            }
+        }
+    }
+
+    private void toggleLightsPartTwo(int startRangeX, int startRangeY, int endRangeX, int endRangeY) {
+        for(int x = startRangeX; x <= endRangeX; x++) {
+            for(int y = startRangeY; y <= endRangeY; y++) {
+                lightGrid[x][y] += 2;
+            }
+        }
+    }
 
     public static void main(String[] args) {
         AdventOfCodeDaySix adventOfCodeDaySix = new AdventOfCodeDaySix();
@@ -73,6 +116,12 @@ public class AdventOfCodeDaySix {
         int result = adventOfCodeDaySix.performAction(instructions);
 
         System.out.println("number of lights on: " + result);
+
+        adventOfCodeDaySix = new AdventOfCodeDaySix();
+
+        result = adventOfCodeDaySix.performActionPartTwo(instructions);
+
+        System.out.println("total brightness: " + result);
     }
 
     private static final String instructions = "toggle 461,550 through 564,900\n" +

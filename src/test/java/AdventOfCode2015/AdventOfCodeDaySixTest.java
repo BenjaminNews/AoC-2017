@@ -37,4 +37,23 @@ public class AdventOfCodeDaySixTest {
         assertEquals(999996, result);
     }
 
+    @Test
+    public void turnOnBrightness() {
+        AdventOfCodeDaySix adventOfCodeDaySix = new AdventOfCodeDaySix();
+
+        String input = "turn on 0,0 through 0,0";
+
+        int result = adventOfCodeDaySix.performActionPartTwo(input);
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void toggleBrightness() {
+        AdventOfCodeDaySix adventOfCodeDaySix = new AdventOfCodeDaySix();
+
+        String input = "toggle 0,0 through 999,999";
+
+        int result = adventOfCodeDaySix.performActionPartTwo(input);
+        assertEquals(2000000, result);
+    }
 }
