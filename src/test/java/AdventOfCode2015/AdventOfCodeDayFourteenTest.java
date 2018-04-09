@@ -78,7 +78,6 @@ public class AdventOfCodeDayFourteenTest {
         assertEquals(139, result);
     }
 
-
     @Test
     public void afterOneThousandStepsDancerWins() {
         AdventOfCodeDayFourteen adventOfCodeDayFourteen = new AdventOfCodeDayFourteen();
@@ -92,7 +91,12 @@ public class AdventOfCodeDayFourteenTest {
         reindeer.add(dancer);
         adventOfCodeDayFourteen.setup(reindeer);
         adventOfCodeDayFourteen.fly(movementCount);
+        int cometScore = comet.getScore();
+        int dancerScore = dancer.getScore();
         int result = adventOfCodeDayFourteen.getHighestScore();
+        assertEquals(689, dancerScore);
+        assertEquals(312, cometScore);
         assertEquals(689, result);
     }
 }
+
