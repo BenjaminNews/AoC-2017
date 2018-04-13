@@ -5,17 +5,13 @@ import java.util.Arrays;
 public class AdventOfCodeDayTwo {
 
     public int getResultPartOne(String input) {
-
         String[] lines = input.split("\n");
-
         int runningScore = 0;
 
         for(int line = 0; line < lines.length; line++) {
             String[] values;
             values = getInputLines(lines[line]);
-
             int[] allValues = Arrays.stream(values).mapToInt(Integer::parseInt).toArray();
-
             Arrays.sort(allValues);
             runningScore += allValues[allValues.length - 1] - allValues[0];
         }
@@ -23,20 +19,14 @@ public class AdventOfCodeDayTwo {
     }
 
     public int getResultPartTwo(String input) {
-
         String[] lines = input.split("\n");
-
         int runningScore = 0;
 
         for(int line = 0; line < lines.length; line++) {
             String[] values;
-
             values = getInputLines(lines[line]);
-
             int[] allValues = Arrays.stream(values).mapToInt(Integer::parseInt).toArray();
-
             Arrays.sort(allValues);
-
             for (int i = 0; i < allValues.length; i++) {
                 runningScore = getEventNumbers(runningScore, values, allValues, i);
             }
@@ -63,13 +53,7 @@ public class AdventOfCodeDayTwo {
     }
 
     private String[] getInputLines(String line) {
-        String[] values;
-        if(line.contains("\t")) {
-            values = line.split("\t");
-        } else {
-            values = line.split(" "); // for tests
-        }
-        return values;
+       return line.contains("\t") ? line.split("\t") : line.split(" ");
     }
 
     public static void main(String[] args) {
