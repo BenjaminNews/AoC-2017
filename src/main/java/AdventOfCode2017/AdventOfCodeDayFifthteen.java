@@ -57,25 +57,13 @@ public class AdventOfCodeDayFifthteen {
         return matches;
     }
 
-    public void performStepsPartOne() {
-        for(int i = 0; i < steps; i++ ) {
-            updateGeneratorValuesPartOne();
-        }
-    }
-
-    public void performStepsPartTwo() {
-        for(int i = 0; i < steps; i++ ) {
-            updateGeneratorValuesPartTwo();
-        }
-    }
-
     public static void main(String[] args) {
         AdventOfCodeDayFifthteen adventOfCodeDayFifthteen = new AdventOfCodeDayFifthteen(783, 16807, 325, 48271, 40000000);
-        adventOfCodeDayFifthteen.performStepsPartOne();
+        adventOfCodeDayFifthteen.updateGeneratorValuesPartOne();
         System.out.println("result: " + adventOfCodeDayFifthteen.getMatches());
 
         adventOfCodeDayFifthteen = new AdventOfCodeDayFifthteen(783, 16807, 325, 48271, 5000000);
-        adventOfCodeDayFifthteen.performStepsPartTwo();
+        adventOfCodeDayFifthteen.updateGeneratorValuesPartTwo();
         System.out.println("result: " + adventOfCodeDayFifthteen.getMatches());
     }
 }
