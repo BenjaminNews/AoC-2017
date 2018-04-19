@@ -6,19 +6,36 @@ import static junit.framework.TestCase.assertEquals;
 
 public class AdventOfCodeDayThirteenTest {
 
-    private final String input = "0: 3\n" +
-            "1: 2\n" +
-            "4: 4\n" +
-            "6: 4";
 
     @Test
     public void testTripSeverityEqualsTwentyFour() {
         AdventOfCodeDayThirteen adventOfCodeDayThirteen = new AdventOfCodeDayThirteen();
 
-        adventOfCodeDayThirteen.setup(input);
+        String input = "0: 3\n" +
+                "1: 2\n" +
+                "4: 4\n" +
+                "6: 4";
 
-        int result = adventOfCodeDayThirteen.move();
+        adventOfCodeDayThirteen.setUp(input);
+
+        int result = adventOfCodeDayThirteen.moveProgram();
 
         assertEquals(24, result);
+    }
+
+    @Test
+    public void testTripTakesTenPicoSecondsToPassWithoutBeingCaught() {
+        AdventOfCodeDayThirteen adventOfCodeDayThirteen = new AdventOfCodeDayThirteen();
+
+        String input = "0: 3\n" +
+                "1: 2\n" +
+                "4: 4\n" +
+                "6: 4";
+
+        adventOfCodeDayThirteen.setUp(input);
+
+        int result = adventOfCodeDayThirteen.moveProgramPartTwo();
+
+        assertEquals(10, result);
     }
 }
