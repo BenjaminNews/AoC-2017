@@ -10,8 +10,9 @@ public class AdventOfCodeDayEighteen {
 
     private static int currentPosition = 0;
 
+    private boolean recovered = false;
     public void setUp() {
-        String[] registerNames = new String[]{ "i", "a", "p", "b", "f", "i" };
+        String[] registerNames = new String[]{ "i", "a", "p", "b", "f" };
         for(String s: registerNames) { registerValues.put(s, 0); }
     }
 
@@ -45,17 +46,21 @@ public class AdventOfCodeDayEighteen {
 
     public void snd(String x) {
         lastPlayedSound = registerValues.get(x);
-        System.out.println("playing: " + lastPlayedSound);
         currentPosition++;
     }
 
     public int rcv(String x) {
-        System.out.println("recovering");
         if(getValueofKey(x) != 0) {
-            lastPlayedSound = getValueofKey(x);
+            set(x, String.valueOf(lastPlayedSound));
+            currentPosition++;
+            System.out.println("a value: " + getValueofKey("a"));
+            System.out.println("b value: " + getValueofKey("b"));
+
+            return lastPlayedSound;
+        } else {
+            currentPosition++;
         }
-        currentPosition++;
-        return lastPlayedSound;
+        return 0;
     }
 
     private int getValueofKey(String checkValue) {
@@ -91,16 +96,18 @@ public class AdventOfCodeDayEighteen {
     public int performActions(String actions) {
         String[] actionsToPerform = actions.split("\n");
 
-        while(currentPosition < actionsToPerform.length) {
-            System.out.println("instruction: " + actionsToPerform[currentPosition]);
-            if(actionsToPerform[currentPosition].startsWith("rcv")) {
-                return rcv(actionsToPerform[currentPosition].split(" ")[1]);
+        while(recovered == false && currentPosition < actionsToPerform.length) {
+            String instruction = actionsToPerform[currentPosition];
+            if(instruction.startsWith("rcv")) {
+                int x = rcv(instruction.split(" ")[1]);
+                if(x != 0) {
+                    return lastPlayedSound;
+                }
             } else {
-                String instruction = actionsToPerform[currentPosition];
                 performAction(instruction);
             }
         }
-        return -1;
+        return lastPlayedSound;
     }
 
     public static void main(String[] args) {
