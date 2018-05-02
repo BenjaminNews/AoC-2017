@@ -94,9 +94,9 @@ public class AdventOfCodeDayFourteenTest {
         int cometScore = comet.getScore();
         int dancerScore = dancer.getScore();
         int result = adventOfCodeDayFourteen.getHighestScore();
-        assertEquals(689, dancerScore);
-        assertEquals(312, cometScore);
-        assertEquals(689, result);
+        assertEquals(688, dancerScore);
+        assertEquals(311, cometScore);
+        assertEquals(688, result);
     }
 }
 

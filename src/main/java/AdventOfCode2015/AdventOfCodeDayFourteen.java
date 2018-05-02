@@ -20,15 +20,10 @@ public class AdventOfCodeDayFourteen {
         }
     }
 
-    private int giveScore() {
+    private void giveScore() {
         Collections.sort(allDeer, new ReindeerDistanceComparator());
-        if(allDeer.get(allDeer.size() - 1).getDistanceTravelled() == allDeer.get(allDeer.size() - 2).getDistanceTravelled()) {
-            allDeer.get(allDeer.size() - 1).incrementScore();
-            allDeer.get(allDeer.size() - 2).incrementScore();
-        } else {
+        if(allDeer.get(allDeer.size() - 1).getDistanceTravelled() != allDeer.get(allDeer.size() - 2).getDistanceTravelled())
             allDeer.get(allDeer.size() -1).incrementScore();
-        }
-        return -1;
     }
 
     public int getFurthestTravelledDitsance() {
