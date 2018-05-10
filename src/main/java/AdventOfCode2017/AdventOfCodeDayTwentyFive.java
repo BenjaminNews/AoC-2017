@@ -3,7 +3,7 @@ package AdventOfCode2017;
 public class AdventOfCodeDayTwentyFive {
     private String state = "A";
 
-    private int[] slots = new int[10000001];
+    private int[] slots = new int[14000];
 
     private int currentPosition;
 
