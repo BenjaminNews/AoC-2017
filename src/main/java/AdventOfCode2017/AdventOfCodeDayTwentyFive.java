@@ -9,65 +9,98 @@ public class AdventOfCodeDayTwentyFive {
 
     private void step() {
         if(state.equals("A")) {
-            if(slots[currentPosition] == 0) {
-                slots[currentPosition] = 1;
-                currentPosition++;
-                state = "B";
-            } else {
-                slots[currentPosition] = 0;
-                currentPosition--;
-                state = "E";
-            }
+            stateA("E");
         } else if(state.equals("B")) {
-            if(slots[currentPosition] == 0) {
-                slots[currentPosition] = 1;
-                currentPosition--;
-                state = "C";
-            } else {
-                slots[currentPosition] = 0;
-                currentPosition++;
-                state = "A";
-            }
+            stateB();
         } else if(state.equals("C")) {
-            if(slots[currentPosition] == 0) {
-                slots[currentPosition] = 1;
-                currentPosition--;
-                state = "D";
-            } else {
-                slots[currentPosition] = 0;
-                currentPosition++;
-                state = "C";
-            }
+            stateC();
         } else if(state.equals("D")) {
-            if(slots[currentPosition] == 0) {
-                slots[currentPosition] = 1;
-                currentPosition--;
-                state = "E";
-            } else {
-                slots[currentPosition] = 0;
-                currentPosition--;
-                state = "F";
-            }
+            stateD();
         } else if(state.equals("E")) {
-            if(slots[currentPosition] == 0) {
-                slots[currentPosition] = 1;
-                currentPosition--;
-                state = "A";
-            } else {
-                currentPosition--;
-                state = "C";
-            }
-
+            stateE();
         } else if(state.equals("F")) {
-            if(slots[currentPosition] == 0) {
-                slots[currentPosition] = 1;
-                currentPosition--;
-                state = "E";
-            } else {
-                currentPosition++;
-                state = "A";
-            }
+            stateF();
         }
+    }
+
+    private void stateF() {
+        if(slots[currentPosition] == 0) {
+            turnOnMoveLeft();
+            state = "E";
+        } else {
+            turnOnMoveRight();
+            state = "A";
+        }
+    }
+
+    private void stateE() {
+        if(slots[currentPosition] == 0) {
+            turnOnMoveLeft();
+            state = "A";
+        } else {
+            turnOnMoveLeft();
+            state = "C";
+        }
+    }
+
+    private void stateD() {
+        if(slots[currentPosition] == 0) {
+            turnOnMoveLeft();
+            state = "E";
+        } else {
+            turnOffMoveLeft();
+            state = "F";
+        }
+    }
+
+    private void stateC() {
+        if(slots[currentPosition] == 0) {
+            turnOnMoveLeft();
+            state = "D";
+        } else {
+            turnOffMoveRight();
+            state = "C";
+        }
+    }
+
+    private void stateB() {
+        if(slots[currentPosition] == 0) {
+            turnOnMoveLeft();
+            state = "C";
+        } else {
+            turnOffMoveRight();
+            state = "A";
+        }
+    }
+
+    private void stateA(String e) {
+        if (slots[currentPosition] == 0) {
+            turnOnMoveRight();
+            state = "B";
+        } else {
+            turnOffMoveLeft();
+            state = e;
+        }
+    }
+
+    private void turnOffMoveRight() {
+        slots[currentPosition] = 0;
+        currentPosition++;
+    }
+
+    private void turnOffMoveLeft() {
+        slots[currentPosition] = 0;
+        currentPosition--;
+    }
+
+    private void turnOnMoveRight() {
+        slots[currentPosition] = 1;
+        currentPosition++;
+    }
+
+    private void turnOnMoveLeft() {
+        slots[currentPosition] = 1;
+        currentPosition--;
     }
 
     public void setup() {
@@ -79,7 +112,6 @@ public class AdventOfCodeDayTwentyFive {
 
     public void performSteps(int stepCount) {
         for(int i = 0; i < stepCount; i++) {
-            System.out.println("current position: " + currentPosition + " step: " + i);
             step();
         }
     }
@@ -93,21 +125,18 @@ public class AdventOfCodeDayTwentyFive {
     private void stepTests() {
         if(state.equals("A")) {
             if(slots[currentPosition] == 0) {
-                slots[currentPosition] = 1;
-                currentPosition++;
+                turnOnMoveRight();
                 state = "B";
             } else {
-                slots[currentPosition] = 0;
-                currentPosition--;
+                turnOffMoveLeft();
                 state = "B";
             }
         } else if(state.equals("B")) {
             if(slots[currentPosition] == 0) {
-                slots[currentPosition] = 1;
-                currentPosition--;
+                turnOnMoveLeft();
                 state = "A";
             } else {
-                currentPosition++;
+                turnOnMoveRight();
                 state = "A";
             }
         }
