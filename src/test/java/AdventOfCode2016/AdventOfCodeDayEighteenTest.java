@@ -7,14 +7,13 @@ import static org.junit.Assert.assertEquals;
 public class AdventOfCodeDayEighteenTest {
 
     @Test
-    public void firstRowHasTotalOfFourSafeSpaces() {
+    public void inputReturnsSixSafeTiles() {
         AdventOfCodeDayEighteen adventOfCodeDayEighteen = new AdventOfCodeDayEighteen();
-
-        String input = "..^^.";
-        adventOfCodeDayEighteen.setUp(input, 100);
-        int result = adventOfCodeDayEighteen.getSafeTileCount(input);
-
-        assertEquals(4, result);
+        assertEquals(6, adventOfCodeDayEighteen.calculateSafeTile("..^^.", 3));
     }
-
+    @Test
+    public void inputReturnsThirtyEightSafeTiles() {
+        AdventOfCodeDayEighteen adventOfCodeDayEighteen = new AdventOfCodeDayEighteen();
+        assertEquals(38, adventOfCodeDayEighteen.calculateSafeTile(".^^.^.^^^^", 10));
+    }
 }
