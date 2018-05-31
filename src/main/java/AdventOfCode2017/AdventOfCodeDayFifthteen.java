@@ -20,7 +20,7 @@ public class AdventOfCodeDayFifthteen {
         this.steps = steps;
     }
 
-    private void updateGeneratorValuesPartOne() {
+    public void updateGeneratorValuesPartOne() {
         long p1 = generatorAStartingValue;
         long p2 = generatorBStartingValue;
         int c = 0;
