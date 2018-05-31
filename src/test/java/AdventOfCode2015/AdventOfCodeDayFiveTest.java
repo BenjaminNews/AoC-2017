@@ -9,132 +9,81 @@ public class AdventOfCodeDayFiveTest {
     @Test
     public void inputOneReturnsNice() {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
         String input = "ugknbfddgicrmopn";
-
-        int result = adventOfCodeDayFive.getNiceCount(input);
-
+        adventOfCodeDayFive.setUp(input);
+        int result = adventOfCodeDayFive.getTotalHappyStrings();
         assertEquals(1, result);
     }
 
     @Test
     public void inputTwoReturnsNice() {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
         String input = "aaa";
-
-        int result = adventOfCodeDayFive.getNiceCount(input);
-
+        adventOfCodeDayFive.setUp(input);
+        int result = adventOfCodeDayFive.getTotalHappyStrings();
         assertEquals(1, result);
     }
 
     @Test
     public void inputThreeReturnsNaughty() {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
         String input = "jchzalrnumimnmhp";
-
-        int result = adventOfCodeDayFive.getNiceCount(input);
-
+        adventOfCodeDayFive.setUp(input);
+        int result = adventOfCodeDayFive.getTotalHappyStrings();
         assertEquals(0, result);
     }
 
     @Test
     public void inputFourReturnsNaughty() {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
         String input = "haegwjzuvuyypxyu";
-
-        int result = adventOfCodeDayFive.getNiceCount(input);
-
+        adventOfCodeDayFive.setUp(input);
+        int result = adventOfCodeDayFive.getTotalHappyStrings();
         assertEquals(0, result);
     }
 
     @Test
     public void inputFiveReturnsNaughty() {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
         String input = "dvszwmarrgswjxmb";
-
-        int result = adventOfCodeDayFive.getNiceCount(input);
-
+        adventOfCodeDayFive.setUp(input);
+        int result = adventOfCodeDayFive.getTotalHappyStrings();
         assertEquals(0, result);
     }
 
     @Test
-    public void inputOneReturnsNicePartTwo() {
+    public void inputSixReturnsNice() {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
         String input = "qjhvhtzxzqqjkmpb";
-
-        int result = adventOfCodeDayFive.getNiceCountPartTwo(input);
-
+        adventOfCodeDayFive.setUp(input);
+        int result = adventOfCodeDayFive.getTotalHappyStringsPartTwo();
         assertEquals(1, result);
     }
 
     @Test
-    public void inputTwoReturnsNaughtyPartTwo() {
+    public void inputSevenReturnsNice() {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
-        String input = "uurcxstgmygtbstg";
-
-        int result = adventOfCodeDayFive.getNiceCountPartTwo(input);
-
-        assertEquals(0, result);
-    }
-
-    @Test
-    public void inputThreeReturnsNaughtyPartTwo() {
-        AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
-        String input = "ieodomkazucvgmuy";
-
-        int result = adventOfCodeDayFive.getNiceCountPartTwo(input);
-
-        assertEquals(0, result);
-    }
-
-    @Test
-    public void inputFourReturnsNicePartTwo() {
-        AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
         String input = "xxyxx";
-
-        int result = adventOfCodeDayFive.getNiceCountPartTwo(input);
-
+        adventOfCodeDayFive.setUp(input);
+        int result = adventOfCodeDayFive.getTotalHappyStringsPartTwo();
         assertEquals(1, result);
     }
 
     @Test
-    public void inputFiveReturnsNicePartTwo() {
+    public void inputEightReturnsNaughty() {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
-        String input = "xlyxlvhv";
-
-        int result = adventOfCodeDayFive.getNiceCountPartTwo(input);
-
-        assertEquals(1, result);
+        String input = "uurcxstgmygtbstg";
+        adventOfCodeDayFive.setUp(input);
+        int result = adventOfCodeDayFive.getTotalHappyStringsPartTwo();
+        assertEquals(0, result);
     }
 
     @Test
-    public void inputSixReturnsNicePartTwo() {
+    public void inputNineReturnsNaughty() {
         AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
-        String input = "abaxtaxt";
-
-        int result = adventOfCodeDayFive.getNiceCountPartTwo(input);
-
-        assertEquals(1, result);
-    }
-
-    @Test
-    public void inputEightReturnsNaughtyPartTwo() {
-        AdventOfCodeDayFive adventOfCodeDayFive = new AdventOfCodeDayFive();
-
-        String input = "aaa";
-
-        int result = adventOfCodeDayFive.getNiceCountPartTwo(input);
-
+        String input = "ieodomkazucvgmuy";
+        adventOfCodeDayFive.setUp(input);
+        int result = adventOfCodeDayFive.getTotalHappyStringsPartTwo();
         assertEquals(0, result);
     }
 }
