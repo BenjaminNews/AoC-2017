@@ -7,16 +7,16 @@ import static org.junit.Assert.assertEquals;
 public class AdventOfCodeDayFifthteenTest {
 
     @Test
-    public void test() {
+    public void partOneReturnsScoreOf62842880() {
         AdventOfCodeDayFifthteen adventOfCodeDayFifthteen = new AdventOfCodeDayFifthteen();
-        int result = adventOfCodeDayFifthteen.forTest();
+        int result = adventOfCodeDayFifthteen.partOneTest();
         assertEquals(62842880, result);
     }
 
     @Test
-    public void testPartTwo() {
+    public void partTwoReturnsScoreOf57600000() {
         AdventOfCodeDayFifthteen adventOfCodeDayFifthteen = new AdventOfCodeDayFifthteen();
-        int result = adventOfCodeDayFifthteen.forTestPartTwo();
+        int result = adventOfCodeDayFifthteen.partTwoTest();
         assertEquals(57600000, result);
     }
 }
