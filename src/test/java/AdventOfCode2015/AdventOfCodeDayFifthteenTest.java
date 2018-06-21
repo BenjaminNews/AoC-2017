@@ -9,8 +9,14 @@ public class AdventOfCodeDayFifthteenTest {
     @Test
     public void test() {
         AdventOfCodeDayFifthteen adventOfCodeDayFifthteen = new AdventOfCodeDayFifthteen();
-        double result = adventOfCodeDayFifthteen.getCombinationsForTest();
+        int result = adventOfCodeDayFifthteen.forTest();
         assertEquals(62842880, result);
     }
 
+    @Test
+    public void testPartTwo() {
+        AdventOfCodeDayFifthteen adventOfCodeDayFifthteen = new AdventOfCodeDayFifthteen();
+        int result = adventOfCodeDayFifthteen.forTestPartTwo();
+        assertEquals(57600000, result);
+    }
 }
