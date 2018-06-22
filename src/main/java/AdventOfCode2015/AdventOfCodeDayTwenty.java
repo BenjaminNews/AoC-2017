@@ -1,39 +1,54 @@
 package AdventOfCode2015;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class AdventOfCodeDayTwenty {
 
-    public int getDeliveredPresents(int houseNumber) {
-        ArrayList<Integer> perfectlyDivided = new ArrayList<Integer>();
-        if(houseNumber == 1) {
-            return 10;
+    public int getLowestHouseNumberForPresents(int presentAmount) {
+        int houseNumber = 0;
+        if(presentAmount == 10) {
+            return 1;
         } else {
-            perfectlyDivided.add(houseNumber);
-            for (int i = 1; i < houseNumber; i++) {
-                if (houseNumber % i == 0) {
-                    perfectlyDivided.add(i);
+            while(true) {
+                houseNumber++;
+                int runningPresentCount = 10;
+                for (int i = 1; i < houseNumber; i++) {
+                    if (houseNumber % i == 0) {
+                        runningPresentCount += (houseNumber / i) * 10;
+                    }
+                }
+                if(houseNumber % 10000 == 0) {
+                    System.out.println(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()) + " " + houseNumber);
+                }
+                if (runningPresentCount >= presentAmount) {
+                    return houseNumber;
                 }
             }
-            int totalPresents = 0;
-            for (int i : perfectlyDivided) {
-                totalPresents += houseNumber / i * 10;
-            }
-            return totalPresents;
         }
+    }
+
+    public int getLowestHouseNumberForPresentsPartTwo(int presentAmount) {
+        int[] houses = new int[1000000];
+        for(int x = 1; x < houses.length; x++) {
+            int count = 0;
+            for(int y = x; y < houses.length; y += x) {
+                houses[y] += x * 11;
+                if(++count == 50)
+                    break;
+            }
+        }
+        for(int i = 0; i < houses.length;i++) {
+            if(houses[i] >= presentAmount) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static void main(String[] args) {
         AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int i = 1;
-        int numberOfPresents = adventOfCodeDayTwenty.getDeliveredPresents(i);
-        i++;
-        while(numberOfPresents < 36000000) {
-            if(adventOfCodeDayTwenty.getDeliveredPresents(i) > numberOfPresents) {
-                numberOfPresents = adventOfCodeDayTwenty.getDeliveredPresents(i);
-                System.out.println(i + " presents: " + numberOfPresents);
-            }
-            i++;
-        }
+        System.out.println(adventOfCodeDayTwenty.getLowestHouseNumberForPresents(36000000));
+        adventOfCodeDayTwenty.getLowestHouseNumberForPresentsPartTwo();
     }
 }

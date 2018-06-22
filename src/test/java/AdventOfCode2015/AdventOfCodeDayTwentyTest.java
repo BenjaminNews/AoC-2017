@@ -9,63 +9,42 @@ public class AdventOfCodeDayTwentyTest {
     @Test
     public void houseOneGetsTenPresents() {
         AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int result = adventOfCodeDayTwenty.getDeliveredPresents(1);
-        assertEquals(10, result);
+        int result = adventOfCodeDayTwenty.getLowestHouseNumberForPresents(10);
+        assertEquals(1, result);
     }
 
     @Test
     public void houseTwoGetsThirtyPresents() {
         AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int result = adventOfCodeDayTwenty.getDeliveredPresents(2);
-        assertEquals(30, result);
+        int result = adventOfCodeDayTwenty.getLowestHouseNumberForPresents(30);
+        assertEquals(2, result);
     }
 
     @Test
     public void houseThreeGetsFourtyPresents() {
         AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int result = adventOfCodeDayTwenty.getDeliveredPresents(3);
-        assertEquals(40, result);
+        int result = adventOfCodeDayTwenty.getLowestHouseNumberForPresents(40);
+        assertEquals(3, result);
     }
 
     @Test
     public void houseFourGetsSeventyPresents() {
         AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int result = adventOfCodeDayTwenty.getDeliveredPresents(4);
-        assertEquals(70, result);
-    }
-
-    @Test
-    public void houseFiveGetsSixtyPresents() {
-        AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int result = adventOfCodeDayTwenty.getDeliveredPresents(5);
-        assertEquals(60, result);
+        int result = adventOfCodeDayTwenty.getLowestHouseNumberForPresents(70);
+        assertEquals(4, result);
     }
 
     @Test
     public void houseSixGetsOneHundredAndTwentyPresents() {
         AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int result = adventOfCodeDayTwenty.getDeliveredPresents(6);
-        assertEquals(120, result);
+        int result = adventOfCodeDayTwenty.getLowestHouseNumberForPresents(120);
+        assertEquals(6, result);
     }
 
     @Test
-    public void houseSevenGetsEightyPresents() {
+    public void houseEightGetOneHundredAndFiftyPresents() {
         AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int result = adventOfCodeDayTwenty.getDeliveredPresents(7);
-        assertEquals(80, result);
-    }
-
-    @Test
-    public void houseEightGetsOneHundredAndFiftyPresents() {
-        AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int result = adventOfCodeDayTwenty.getDeliveredPresents(8);
-        assertEquals(150, result);
-    }
-
-    @Test
-    public void houseNineGetsOneHundredAndThirtyPresents() {
-        AdventOfCodeDayTwenty adventOfCodeDayTwenty = new AdventOfCodeDayTwenty();
-        int result = adventOfCodeDayTwenty.getDeliveredPresents(9);
-        assertEquals(130, result);
+        int result = adventOfCodeDayTwenty.getLowestHouseNumberForPresents(150);
+        assertEquals(8, result);
     }
 }
