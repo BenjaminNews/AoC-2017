@@ -6,11 +6,14 @@ import java.util.HashMap;
 public class AdventOfCodeDayTen {
 
     private ArrayList<String> actions = new ArrayList<String>();
-    private HashMap<Integer, Integer> bins = new HashMap<>();
 
+    private HashMap<Integer, Integer> bins = new HashMap<>();
     private HashMap<Integer, Bot> bots = new HashMap<Integer, Bot>();
 
-    public void setup(String input) {
+    private int chipOneValue;
+    private int chipTwoValue;
+
+    public void setup(String input, int chipOneValue, int chipTwoValue) {
         for(String action : input.split("\n")) {
             if(action.startsWith("value")) {
                 String[] values = action.split(" ");
@@ -29,93 +32,79 @@ public class AdventOfCodeDayTen {
                 actions.add(action);
             }
         }
+        this.chipOneValue = chipOneValue;
+        this.chipTwoValue = chipTwoValue;
     }
 
     public void run() {
-        for(int i : bots.keySet()) {
-            System.out.println(bots.get(i).toString());
-        }
-        System.out.println("");
-
-//        for(String s: actions) {
-//            System.out.println(s);
-//        }
-//        System.out.println("\n");
-
         while(actions.size() > 0) {
             for(int i = 0; i < actions.size(); i++) {
                 String[] actionValues = actions.get(i).split(" ");
                 int botNumber = Integer.parseInt(actionValues[1]);
                 if (bots.containsKey(botNumber)) {
+                    Bot bot = bots.get(botNumber);
                     if (bots.get(botNumber).hasTwoChips()) {
-
+                        int lowChipValue = bots.get(botNumber).getLow();
+                        int highChipValue = bots.get(botNumber).getHigh();
+                        if(lowChipValue == chipOneValue && highChipValue == chipTwoValue) {
+                            System.out.println("bot " + botNumber + " comparing chips: (" + lowChipValue + "," + highChipValue + ")");
+                        }
                         if (actionValues[5].equals("bot") && actionValues[10].equals("bot")) {
-                            int lowChipValue = bots.get(botNumber).getLow();
-                            int highChipValue = bots.get(botNumber).getHigh();
                             int botNumberToGiveToLow = Integer.parseInt(actionValues[6]);
                             int botNumberToGiveToHigh = Integer.parseInt(actionValues[11]);
-                            System.out.println("bot " + botNumber + " comparing chips (" + lowChipValue + ", " + highChipValue + ")");
-                            if (!bots.containsKey(botNumberToGiveToLow)) {
-                                Bot bot = new Bot(botNumberToGiveToLow);
-                                bot.addChip(lowChipValue);
-                                bots.put(botNumberToGiveToLow, bot);
-                            } else {
-                                Bot bot = bots.get(botNumberToGiveToLow);
-                                bot.addChip(lowChipValue);
-                                bots.put(botNumberToGiveToLow, bot);
-                            }
-
-                            if (!bots.containsKey(botNumberToGiveToHigh)) {
-                                Bot bot = new Bot(botNumberToGiveToHigh);
-                                bot.addChip(highChipValue);
-                                bots.put(botNumberToGiveToHigh, bot);
-                            } else {
-                                Bot bot = bots.get(botNumberToGiveToHigh);
-                                bot.addChip(highChipValue);
-                                bots.put(botNumberToGiveToHigh, bot);
-                            }
-                            actions.remove(i);
+                            distributeToOtherBots(botNumberToGiveToLow, botNumberToGiveToHigh, lowChipValue, highChipValue);
                         } else if (actionValues[5].equals("output") && actionValues[10].equals("output")) {
-                            int botNumberToGiveChipsToOutput = Integer.parseInt(actionValues[1]);
-                            if (bots.containsKey(botNumberToGiveChipsToOutput)) {
-                                Bot bot = bots.get(botNumberToGiveChipsToOutput);
-                                int lowOutputBin = Integer.parseInt(actionValues[6]);
-                                int highOutputBin = Integer.parseInt(actionValues[11]);
-                                int lowChipValue = bot.getLow();
-                                int highChipValue = bot.getHigh();
-                                System.out.println("bot " + botNumber + " comparing chips (" + lowChipValue + ", " + highChipValue + ")");
-                                bins.put(lowOutputBin, lowChipValue);
-                                bins.put(highOutputBin, highChipValue);
-                                bots.put(botNumber, bot);
-                                bots.put(botNumberToGiveChipsToOutput, bot);
-                                actions.remove(i);
-                            }
+                            int lowOutputBin = Integer.parseInt(actionValues[6]);
+                            int highOutputBin = Integer.parseInt(actionValues[11]);
+                            putChipsInOutputBins(botNumber, bot, lowChipValue, highChipValue, lowOutputBin, highOutputBin);
                         } else if (actionValues[5].equals("output") && actionValues[10].equals("bot")) {
-                            int botNumberToDistributeChips = Integer.parseInt(actionValues[1]);
                             int outputBinValue = Integer.parseInt(actionValues[6]);
-                            int botToGiveChipTo = Integer.parseInt(actionValues[11]);
-                            if(!bots.containsKey(botToGiveChipTo)) {
-                                bots.put(botToGiveChipTo, new Bot(botToGiveChipTo));
-                            }
-                            Bot bot = bots.get(botNumberToDistributeChips);
-
-                            int lowChipValue = bot.getLow();
-                            int highChipValue = bot.getHigh();
-
-                            System.out.println("bot " + botNumber + " comparing chips (" + lowChipValue + ", " + highChipValue + ")");
-
                             bins.put(outputBinValue, lowChipValue);
-                            Bot botToGiveTo = bots.get(botToGiveChipTo);
-                            botToGiveTo.addChip(highChipValue);
-                            bots.put(botNumberToDistributeChips, bot);
-                            bots.put(botToGiveChipTo, botToGiveTo);
-                            actions.remove(i);
+                            int botToGiveChipTo = Integer.parseInt(actionValues[11]);
+                            giveToBothOutputAndBot(botNumber, bot, highChipValue, botToGiveChipTo);
                         }
-
-
+                        actions.remove(i);
                     }
                 }
             }
+        }
+        System.out.println("bin product: " + getBinValue(0) * getBinValue(1) * getBinValue(2));
+    }
+
+    private void giveToBothOutputAndBot(int botNumber, Bot bot, int highChipValue, int botToGiveChipTo) {
+        if(!bots.containsKey(botToGiveChipTo)) {
+            bots.put(botToGiveChipTo, new Bot(botToGiveChipTo));
+        }
+        Bot botToGiveTo = bots.get(botToGiveChipTo);
+        botToGiveTo.addChip(highChipValue);
+        bots.put(botNumber, bot);
+        bots.put(botToGiveChipTo, botToGiveTo);
+    }
+
+    private void putChipsInOutputBins(int botNumber, Bot bot, int lowChipValue, int highChipValue, int lowOutputBin, int highOutputBin) {
+        bins.put(lowOutputBin, lowChipValue);
+        bins.put(highOutputBin, highChipValue);
+        bots.put(botNumber, bot);
+    }
+
+    private void distributeToOtherBots(int botNumberToGiveToLow, int botNumberToGiveToHigh, int lowChipValue, int highChipValue) {
+        if (!bots.containsKey(botNumberToGiveToLow)) {
+            Bot bot = new Bot(botNumberToGiveToLow);
+            bot.addChip(lowChipValue);
+            bots.put(botNumberToGiveToLow, bot);
+        } else {
+            Bot bot = bots.get(botNumberToGiveToLow);
+            bot.addChip(lowChipValue);
+            bots.put(botNumberToGiveToLow, bot);
+        }
+        if (!bots.containsKey(botNumberToGiveToHigh)) {
+            Bot bot = new Bot(botNumberToGiveToHigh);
+            bot.addChip(highChipValue);
+            bots.put(botNumberToGiveToHigh, bot);
+        } else {
+            Bot bot = bots.get(botNumberToGiveToHigh);
+            bot.addChip(highChipValue);
+            bots.put(botNumberToGiveToHigh, bot);
         }
     }
 
@@ -125,13 +114,8 @@ public class AdventOfCodeDayTen {
 
     public static void main(String[] args) {
         AdventOfCodeDayTen adventOfCodeDayTen = new AdventOfCodeDayTen();
-        adventOfCodeDayTen.setup(input);
+        adventOfCodeDayTen.setup(input, 17, 61);
         adventOfCodeDayTen.run();
-        int outputBinOneValue = adventOfCodeDayTen.getBinValue(0);
-        int outputBinTwoValue = adventOfCodeDayTen.getBinValue(1);
-        int outputBinThreeValue = adventOfCodeDayTen.getBinValue(2);
-        System.out.println(outputBinOneValue + " " + outputBinTwoValue + " " + outputBinThreeValue + " product: " + (outputBinOneValue * outputBinTwoValue * outputBinThreeValue));
-
     }
 
     private class Bot {
