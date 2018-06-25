@@ -1,24 +1,27 @@
 package AdventOfCode2015;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class AdventOfCodeDayElevenTest {
 
+    private AdventOfCodeDayEleven adventOfCodeDayEleven;
+
+    @Before
+    public void setup() {
+        adventOfCodeDayEleven = new AdventOfCodeDayEleven();
+    }
+
     @Test
     public void inputABCDEFGHReturnsFirstPasswordOfABCDFFAA() {
-        AdventOfCodeDayEleven adventOfCodeDayEleven = new AdventOfCodeDayEleven();
-        String input = "abcdefgh";
-        String result = adventOfCodeDayEleven.getPassword(input);
+        String result = adventOfCodeDayEleven.getPassword("abcdefgh");
         assertEquals("abcdffaa", result);
     }
     @Test
     public void inputGHIJKLMNReturnsFirstPasswordOfGHJABCC() {
-        AdventOfCodeDayEleven adventOfCodeDayEleven = new AdventOfCodeDayEleven();
-        String input = "ghijklmn";
-        String result = adventOfCodeDayEleven.getPassword(input);
+        String result = adventOfCodeDayEleven.getPassword("ghijklmn");
         assertEquals("ghjaabcc", result);
     }
-
 }
