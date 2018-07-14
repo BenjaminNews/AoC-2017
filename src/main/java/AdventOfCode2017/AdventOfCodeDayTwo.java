@@ -5,51 +5,36 @@ import java.util.Arrays;
 public class AdventOfCodeDayTwo {
 
     public int getResultPartOne(String input) {
-        String[] lines = input.split("\n");
         int runningScore = 0;
-
-        for(int line = 0; line < lines.length; line++) {
-            String[] values;
-            values = getInputLines(lines[line]);
-            int[] allValues = Arrays.stream(values).mapToInt(Integer::parseInt).toArray();
-            Arrays.sort(allValues);
+        for(String line : input.split("\n")) {
+            int[] allValues = Arrays.stream(getInputLines(line)).mapToInt(Integer::parseInt).sorted().toArray();
             runningScore += allValues[allValues.length - 1] - allValues[0];
         }
         return runningScore;
     }
 
     public int getResultPartTwo(String input) {
-        String[] lines = input.split("\n");
         int runningScore = 0;
-
-        for(int line = 0; line < lines.length; line++) {
-            String[] values;
-            values = getInputLines(lines[line]);
-            int[] allValues = Arrays.stream(values).mapToInt(Integer::parseInt).toArray();
-            Arrays.sort(allValues);
+        for(String line: input.split("\n")) {
+            int[] allValues = Arrays.stream(getInputLines(line)).mapToInt(Integer::parseInt).sorted().toArray();
             for (int i = 0; i < allValues.length; i++) {
-                runningScore = getEventNumbers(runningScore, values, allValues, i);
+                runningScore += getEvenNumbers(getInputLines(line), allValues, i);
             }
         }
         return runningScore;
     }
 
-    private int getEventNumbers(int runningScore, String[] values, int[] allValues, int i) {
-        int dividedPrecisely;
+    private int getEvenNumbers(String[] values, int[] allValues, int i) {
         int masterValue = allValues[i];
         for (int x = i + 1; x < values.length; x++) {
             int currentValue = allValues[x];
             if (masterValue % currentValue == 0) {
-                dividedPrecisely = masterValue / currentValue;
-                runningScore += dividedPrecisely;
-                break;
+                return (masterValue / currentValue);
             } else if (currentValue % masterValue == 0) {
-                dividedPrecisely = currentValue / masterValue;
-                runningScore += dividedPrecisely;
-                break;
+                return (currentValue / masterValue);
             }
         }
-        return runningScore;
+        return 0;
     }
 
     private String[] getInputLines(String line) {
