@@ -1,58 +1,41 @@
-package AdcentOfCode2017;
+package AdventOfCode2017;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AdventOfCodeDayFour {
 
-    public int getInvalidCount(String input) {
-        ArrayList<String> elements = new ArrayList<String>();
-
-        String[] sections = input.split(" ");
-
-        for(String s : sections) {
-            if(elements.contains(s)) {
-                return 1;
-            } else {
-                elements.add(s);
-            }
+    public int getInvalidCount(String inputLines) {
+        int duplicates = 0;
+        for(String input : inputLines.split("\n")) {
+            List<String> distinctList = Arrays.asList(input.split(" ")).stream().distinct().collect(Collectors.toList());
+            duplicates += distinctList.size() < input.split(" ").length ? 1 : 0;
         }
-        return 0;
+        return duplicates;
     }
 
-    public int getInvalidCountWithAnagrams(String input) {
-        ArrayList<String> elements = new ArrayList<String>();
-
-        String[] sections = input.split(" ");
-
-        for(String s : sections) {
-            char[] passwordOrderedAlphabetically = s.toCharArray();
-            Arrays.sort(passwordOrderedAlphabetically);
-            String sortedString = new String(passwordOrderedAlphabetically);
-            if(elements.contains(sortedString)) {
-                return 1;
-            } else {
-                elements.add(sortedString);
-            }
+    public int getInvalidCountPartTwo(String inputLines) {
+        int invalidCount = 0;
+        for(String input: inputLines.split("\n")) {
+            List<String> ordered = new ArrayList<>();
+            Arrays.asList(input.split(" "))
+                .forEach(section -> {
+                    char[] c = section.toCharArray();
+                    Arrays.sort(c);
+                    ordered.add(new String(c));
+            });
+            List<String> distinctList = ordered.stream().distinct().collect(Collectors.toList());
+            invalidCount += distinctList.size() < input.split(" ").length ? 1 : 0;
         }
-
-        return 0;
+        return invalidCount;
     }
 
     public static void main(String[] args) {
         AdventOfCodeDayFour adventOfCodeDayFour = new AdventOfCodeDayFour();
-
-        int resOne = 0;
-        int resTwo = 0;
-        String[] lines = input.split("\n");
-
-        for (int i = 0; i < lines.length; i++) {
-            resOne += adventOfCodeDayFour.getInvalidCount(lines[i]);
-            resTwo += adventOfCodeDayFour.getInvalidCountWithAnagrams(lines[i]);
-        }
-
-        System.out.println("valid passwords one: " + (lines.length - resOne));
-        System.out.println("valid passwords two: " + (lines.length - resTwo));
+        System.out.println(input.split("\n").length - adventOfCodeDayFour.getInvalidCount(input));
+        System.out.println(input.split("\n").length - adventOfCodeDayFour.getInvalidCountPartTwo(input));
     }
 
     private static final String input = "una bokpr ftz ryw nau yknf fguaczl anu\n" +
