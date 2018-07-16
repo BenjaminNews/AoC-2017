@@ -1,11 +1,10 @@
 package AdventOfCode2015;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class AdventOfCodeDayFourteen {
-    ArrayList<AdventOfCodeDayFourteenReindeer> allDeer = new ArrayList<>();
+    private ArrayList<AdventOfCodeDayFourteenReindeer> allDeer = new ArrayList<>();
 
     public void setup(ArrayList<AdventOfCodeDayFourteenReindeer> allDeer) {
         this.allDeer = allDeer;
@@ -21,7 +20,7 @@ public class AdventOfCodeDayFourteen {
     }
 
     private void giveScore() {
-        Collections.sort(allDeer, new ReindeerDistanceComparator());
+        allDeer.sort(Comparator.comparing(AdventOfCodeDayFourteenReindeer::getDistanceTravelled));
         if(allDeer.get(allDeer.size() - 1).getDistanceTravelled() != allDeer.get(allDeer.size() - 2).getDistanceTravelled())
             allDeer.get(allDeer.size() -1).incrementScore();
     }
@@ -77,13 +76,5 @@ public class AdventOfCodeDayFourteen {
         int result = adventOfCodeDayFourteen.getFurthestTravelledDitsance();
         System.out.println("result: " + result);
         System.out.println("highest score: " + adventOfCodeDayFourteen.getHighestScore());
-    }
-
-    public class ReindeerDistanceComparator implements Comparator<AdventOfCodeDayFourteenReindeer>
-    {
-        public int compare(AdventOfCodeDayFourteenReindeer deerOne, AdventOfCodeDayFourteenReindeer deerTwo)
-        {
-            return Integer.compare(deerOne.getDistanceTravelled(), deerTwo.getDistanceTravelled());
-        }
     }
 }
