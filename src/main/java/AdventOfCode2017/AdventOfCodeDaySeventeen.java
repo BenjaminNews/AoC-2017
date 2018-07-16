@@ -42,8 +42,7 @@ public class AdventOfCodeDaySeventeen {
             this.value = insertValue;
         }
     }
-
-
+    
     public int getLayout() {
         return this.value;
     }
