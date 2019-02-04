@@ -162,7 +162,7 @@ public class AdventOfCodeDayTwentyOne {
         System.out.println("gold spent: " + adventOfCodeDayTwentyOne.spentCoins);
 
         boolean buyRings = false;
-        buyRings(adventOfCodeDayTwentyOne, buyRings);
+        adventOfCodeDayTwentyOne.buyRings(adventOfCodeDayTwentyOne, buyRings);
         System.out.println("gold spent: " + adventOfCodeDayTwentyOne.spentCoins);
         buyRings = false;
         buyRings(adventOfCodeDayTwentyOne, buyRings);
@@ -198,7 +198,7 @@ public class AdventOfCodeDayTwentyOne {
         return result;
     }
 
-    private static void buyRings(AdventOfCodeDayTwentyOne adventOfCodeDayTwentyOne, boolean buyRings) {
+    private void buyRings(AdventOfCodeDayTwentyOne adventOfCodeDayTwentyOne, boolean buyRings) {
         while(!buyRings) {
             System.out.print("would you like to buy a ring? (y/n) ");
             String answer = in.next();
